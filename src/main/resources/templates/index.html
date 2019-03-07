@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/jdbc">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script th:src="@{~/common/myJs.jsp}"></script>
+</head>
+<body>
+<!-- 导航条 -->
+<nav class="navbar navbar-inverse navbar-fixed-top" style="width:2400px" >
+    <div class="container" >
+        <div class="navbar-header" >
+            <a class="navbar-brand"  href="#">商品管理系统</a>
+        </div>
+    </div>
+</nav>
+<!-- 内容布局容器 -->
+<div class="container-fulid " style="margin-top:59px;">
+    <div class="row">
+        <div class="col-sm-2">
+            <div id="myTree"></div>
+        </div>
+        <div class="col-sm-9">
+
+            <div id="mytabs">
+
+                <!-- 新选项卡 -->
+                <ul class="nav nav-tabs" id="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#home" role="tab" data-toggle="tab">欢迎</a>
+                    </li>
+                </ul>
+
+                <!-- 选项卡下内容 -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="home">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        initMyTree();
+    })
+    function initMyTree(){
+        $.ajax({
+            url:"/contentYjm/getTreeData",
+            type:'post',
+            dataType:'json',
+            success:function(result){
+                $('#myTree').treeview({
+                    data:result,
+                    //selectable: true,
+                    //expanded: true,
+                    onNodeSelected:function(event,node){
+                        //console.log(node)
+                        $.addtabs({iframeHeight: 650});
+                       if(null !=  node.href && node.nodes==null ){
+                            $.addtabs.add({
+                                id:node.id,
+                                title:node.text,
+                                url:node.href,
+                            })
+                       }
+                    }
+                })
+            }
+        })
+    }
+</script>
+</body>
+</html>

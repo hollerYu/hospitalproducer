@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/jdbc">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <script th:src="@{~/common/myJs.jsp}"></script>
+</head>
+<body>
+<form id="ss" style="margin-left:300px;margin-top:100px;">
+    <table>
+        <caption><center>登录</center></caption>
+        <thead>
+        <tr>
+            <td>姓名</td>
+            <td><input type="text" class="form-control" name="yhMch" ></td>
+            <td><br/></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>密码</td>
+            <td><input class="form-control" name="yhMm"></td>
+            <td><br/></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan="2">
+                <center><button type="button" class="btn btn-info btn-block" onclick="insertForm()">提交</button></center>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+<script>
+    function insertForm(){
+        $.ajax({
+
+            url:"/contentYjm/insertForm",
+            type:"post",
+            data:$("#ss").serialize(),
+
+            success:function(result){
+
+                if(result==1){
+                    location.href="/contentYjm/toPage?page=index";
+                }else{
+                    layer.msg("用户名或密码错误!!!!")
+                }
+            }
+        })
+    }
+
+</script>
+
+</body>
+</html>
