@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.mapper.ReplyMapper">
+
+ <!--评论  回复-->
+	<insert id="replyComment">
+
+		 insert into y_commentreply(id,userId,forReplyId,toReplyId,replyContent,replyTime)
+		 VALUES(#{id},#{forReplyId},#{forReplyId},#{toReplyId},#{replyContent},NOW())
+	</insert>
+
+	<!--  是否评论 过-->
+	<update id="changeReplyState">
+		update y_comment yc set yc.replyState=1 where yc.id=#{id}
+	</update>
+
+</mapper>

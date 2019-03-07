@@ -7,13 +7,14 @@
         select id,yh_mch yhMch,yh_mm yhMm from t_mall_user_account where yh_mch = #{yhMch} and yh_mm = #{yhMm}
     </select>
 
-   <select id="queryDiscu" resultType="Comment">
+   <select id="selectContent" resultType="Comment">
 
-       		SELECT
+    SELECT
 		yc.*, ycr.replyContent replyContent,
 		yh.titles titles,
 		tmua.yh_tx yhTx,
-		tmua.yh_mch yhMch
+		tmua.yh_mch yhMch,
+		yc.replyState replyState
 	FROM
 		y_comment yc,
 		t_mall_user_account tmua,
@@ -22,8 +23,10 @@
 	WHERE
 		tmua.Id = yc.userId
 	AND yh.id = yc.hotPointId
-	AND yc.userId = ycr.userId
-	ORDER BY yc.createTime desc
+	and tmua.id=ycr.forReplyId
+	and ycr.toReplyId=yc.userId
+   ORDER BY yc.createTime desc
+
    </select>
 
 	<!--修改评论  状态-->
