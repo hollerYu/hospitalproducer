@@ -18,7 +18,7 @@ public interface ContentMapper {
     @Select("select * from y_tree2 where pid = #{i}")
     List<Tree> getTreeData(int i);
 
-    List queryDiscu();
+    List selectContent();
 
     void changeState(Integer state, Integer id);
 

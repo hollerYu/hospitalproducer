@@ -8,137 +8,161 @@
 <body>
 <table id="tableId"></table>
 
-<!-- 模态框（Modal） --><!--aria-hidden="true"保持模态框 没有事件触发不会显示 -->
+<!--   评论  回复 模态框（Modal） 开始-->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"
-                        aria-hidden="true">×
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
                 </button>
-                <h4 class="modal-title" id="myModalLabel">
-                    模态框（Modal）标题
-                </h4>
+                <h4 class="modal-title" id="myModalLabel">回复 &nbsp;&nbsp;<p id="nameId"></p></h4>
             </div>
             <div class="modal-body">
-                按下 ESC 按钮退出。
+                <!-- 提交的表单内容-->
+                <form role="form" id="addId">
+                     <input type="hidden" name="id">
+                     <input type="hidden" name="userId">
+                     <div class="form-group">
+                        <label>回复内容:</label>
+                        <textarea class="form-control" rows="3" name="replyContent"></textarea>
+                    </div>
+                </form>
+
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default"
-                        data-dismiss="modal">关闭
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="close()">关闭
                 </button>
-                <button type="button" class="btn btn-primary">
+                <button type="button" class="btn btn-primary" onclick="replyComment()">
                     提交更改
                 </button>
             </div>
         </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    </div><!-- /.modal -->
+</div>
+<!--   评论  回复 模态框（Modal） 结束-->
 
 <script type="application/javascript">
-    $(function(){
+    $(function () {
 
         initDategrid();
 
-        $('#myModal').modal('hide');  //关闭模态框
     })
 
-    function initDategrid(){
+    var id = null;
+    var userId = null;
+    var yhMch = "";
+
+    function initDategrid() {
         $('#tableId').bootstrapTable({
-            toolbar:'#toolbar',
-            url:"/contentYjm/selectContent",
-            pagination:true, //是否展示分页
-            pageList:[1,3,5,10,50],//分页组件
-            pageNumber:1,
-            pageSize:5,//默认每页条数
+            toolbar: '#toolbar',
+            url: "/contentYjm/selectContent",
+            pagination: true, //是否展示分页
+            pageList: [1, 3, 5, 10, 50],//分页组件
+            pageNumber: 1,
+            pageSize: 5,//默认每页条数
             //search:true,//是否显示搜索框
             //searchText:'试试',//初始化搜索文字
-            showColumns:false,//是否显示 内容列下拉框
-            showToggle:false,//是否显示 切换试图（table/card）按钮
-            showPaginationSwitch:false,//是否显示 数据条数选择框
-            showRefresh:false,//是否显示刷新按钮
-            detailView:false,//设置为 true 可以显示详细页面模式。
-            showFooter:false,//是否显示列脚
+            showColumns: false,//是否显示 内容列下拉框
+            showToggle: false,//是否显示 切换试图（table/card）按钮
+            showPaginationSwitch: false,//是否显示 数据条数选择框
+            showRefresh: false,//是否显示刷新按钮
+            detailView: false,//设置为 true 可以显示详细页面模式。
+            showFooter: false,//是否显示列脚
             clickToSelect: false, //是否启用点击选中行
-            sidePagination:'server',//分页方式：client客户端分页，server服务端分页（*
+            sidePagination: 'server',//分页方式：client客户端分页，server服务端分页（*
             // striped:true,
-            queryParams:function(){
+            queryParams: function () {
                 //	var discuName = $('#discuName').val();
                 //	var startTime = $('#startTime').val();
                 //	var endTime = $('#endTime').val();
-                return{
+                return {
                     page: this.pageNumber,
                     rows: this.pageSize,
                     //discuName:discuName,
                     //startTime:startTime,
                     //endTime:endTime
+
                 };
             },
-            columns:[
+            columns: [
 
-                {field:'aaa',title:'xxx',width:60,align:'center',checkbox:true},
-                {field:'yhTx',title:'用户头像',width:60,align:'center',},
-                {field:'titles',title:'标题',width:200,align:'center',},
-                {field:'userContent',title:'评论内容',width:150,align:'center',editor:'text'},
-                {field:'praseCount',title:'点赞数',width:100,align:'center',editor:'text'},
-                {field:'state',title:'状态',width:100,align:'center',editor:'text',
-                    formatter: function(value,row,index){
-                       if(value==0){
-                           return "待审核";
-                       }if(value==1){
-                           return "审核通过";
-                       }if(value==2){
-                           return "审核不通过";
-                       }
+                {field: 'aaa', title: 'xxx', width: 60, align: 'center', checkbox: true},
+                {field: 'yhTx', title: '用户头像', width: 60, align: 'center',},
+                {field: 'yhMch', title: '用户名称', width: 60, align: 'center',},
+                {field: 'titles', title: '标题', width: 200, align: 'center',},
+                {field: 'userContent', title: '评论内容', width: 150, align: 'center', editor: 'text'},
+                {field: 'praseCount', title: '点赞数', width: 100, align: 'center', editor: 'text'},
+                {
+                    field: 'state', title: '状态', width: 100, align: 'center', editor: 'text',
+                    formatter: function (value, row, index) {
+                        if (value == 0) {
+                            return "待审核";
+                        }
+                        if (value == 1) {
+                            return "审核通过";
+                        }
+                        if (value == 2) {
+                            return "审核不通过";
+                        }
                     }
                 },
 
-                {field:'createTime',title:'评论时间',width:100,align:'center',
+                {
+                    field: 'createTime', title: '评论时间', width: 100, align: 'center',
 
-                    formatter: function(value,row,index){
+                    formatter: function (value, row, index) {
                         var mydate = new Date(value)//格式化日期
                         var str = mydate.toLocaleDateString()//日期对象的方法
                         return str;
                     }
                 },
-                {field:'xxx',title:'操作',width:240,align:'center',
+                {
+                    field: 'xxx', title: '操作', width: 240, align: 'center',
 
-                    formatter: function(value,row,index){
-                        var butt=""
-                       if(row.state==0){
-                            butt += "<input type='button' value='审核通过' class='btn btn-success' onclick='changeState(1,"+row.id+")' >   ";
-                            butt += "<input type='button' value='审核不通过' class='btn btn-danger' onclick='changeState(2,"+row.id+")' > ";
-                       }
-                       if(row.state==1){ //状态为 1  通过
-                           butt += "<input type='button'class='btn btn-danger' value='审核不通过' onclick='changeState(2,"+row.id+")'>  ";
+                    formatter: function (value, row, index) {
 
-                       } if(row.state==2){ //状态为 2  不通过
-                           butt += "<input type='button'class='btn btn-success' value='审核通过' onclick='changeState(1,"+row.id+")'>  ";
-                       }
-                       butt +="<input type='button' class='btn btn-info' value='回复' onclick='replyComment()'>";
+                        var butt = ""
+                        if (row.state == 0) {
+                            butt += "<input type='button' value='审核通过' class='btn btn-success' onclick='changeState(1," + row.id + ")' >   ";
+                            butt += "<input type='button' value='审核不通过' class='btn btn-danger' onclick='changeState(2," + row.id + ")' > ";
+                        }
+                        if (row.state == 1) { //状态为 1  通过
+                            butt += "<input type='button'class='btn btn-danger' value='审核不通过' onclick='changeState(2," + row.id + ")'>  ";
+                            if(row.replyState==1) {    //已回复
+                                butt += "<input type='button' class='btn btn-info' disabled value='回复' onclick='openModal(" + row.id + "," + row.userId + ",\"" + row.yhMch + "\")'> ";
+                            }else{
+                                butt += "<input type='button' class='btn btn-info' value='回复' onclick='openModal(" + row.id + "," + row.userId + ",\"" + row.yhMch + "\")'> ";
+                            }
+                         }
+                        if (row.state == 2) { //状态为 2  不通过
+                            butt += "<input type='button'class='btn btn-success' value='审核通过' onclick='changeState(1," + row.id + ")'>  ";
+                        }
+                        //butt +="<button type='button' data-toggle='modal' class='btn btn-info' data-target='#myModal'> 回复 </button>";
                         return butt;
                     },
                 },
             ],
         })
     }
+
     //审核
-    function changeState(state,id){
+    function changeState(state, id) {
         $.ajax({
-            url:'/contentYjm/changeState',
-            data:{state:state,id:id},
+            url: '/contentYjm/changeState',
+            data: {state: state, id: id},
 
-            success:function(result){
+            success: function (result) {
 
-                if(result){
+                if (result) {
                     layer.msg("执行成功!!!")
                     searcher();
-                }else{
+                } else {
                     layer.msg("有异常!!!")
                     searcher();
                 }
 
-            },error:function(){
+            }, error: function () {
 
                 layer.msg("出错了,请查看控制台!!!!")
             }
@@ -146,9 +170,47 @@
     }
 
     //刷新
-    function searcher(){
+    function searcher() {
 
         $('#tableId').bootstrapTable('refresh');
+    }
+  //打开模态框
+    function openModal(id,userId,yhMch) {
+        $("#nameId").html(yhMch);
+        $("[name='id']").val(id);
+        $("[name='userId']").val(userId);
+
+        $('#myModal').modal('show')
+    }
+   //回复评论
+    function replyComment(id, toReplyId) {
+
+        $.ajax({
+            url: '/replyYjm/replyComment',
+            data: {id: $("[name='id']").val(), toReplyId: $("[name='userId']").val(), replyContent: $("[name='replyContent']").val()},
+
+            success: function (result) {
+
+                if (result==1) {
+                    layer.msg("回复成功!!")
+                    $('#myModal').modal('hide');
+                    $('#myModal').reset();
+                    searcher();
+                }
+                if(result==-1){
+                    layer.msg("回复失败!!")
+                    searcher();
+                    $('#myModal').modal('hide');
+                    $('#myModal').reset();
+                }
+                if(result==0){
+                    layer.msg("未登录,去登陆页面!!!")
+                    location.href="/contentYjm/toPage?page=login";
+                }
+            }, error: function () {
+
+            }
+        })
     }
 
 </script>

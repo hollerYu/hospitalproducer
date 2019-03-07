@@ -51,10 +51,10 @@ public class ContentServiceImpl implements ContentService {
 
     @Override
     public ReturnPage selectContent(Integer page, Integer rows) {
-        List<User> list = contentMapper.queryDiscu();
+        List<User> list = contentMapper.selectContent();
 
         PageHelper.startPage(page, rows);
-        List aa = contentMapper.queryDiscu();
+        List aa = contentMapper.selectContent();
 
         ReturnPage returnPage = new ReturnPage(list.size(), aa);
         return returnPage;

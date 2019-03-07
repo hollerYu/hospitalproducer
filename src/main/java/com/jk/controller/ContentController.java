@@ -32,9 +32,10 @@ public class ContentController {
     //登录验证
     @RequestMapping("insertForm")
     @ResponseBody
-    public String insertForm(User user){
+    public String insertForm(User user,HttpSession session){
         User userData=contentService.insertForm(user);
         if(userData !=null){
+            session.setAttribute("user",userData);
             return "1";
         }
         return "0";
@@ -46,10 +47,7 @@ public class ContentController {
 	@RequestMapping("getTreeData")
 	@ResponseBody
 	public List<Tree> getTreeData(HttpSession session){
-		User user=(User) session.getAttribute("user");
-			//如果不存在从数据库查询
 		List<Tree> list = contentService.getTreeData();
-
 		return list;
 	}
 

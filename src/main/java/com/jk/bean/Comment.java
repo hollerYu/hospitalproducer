@@ -36,4 +36,6 @@ public class Comment {
 
     private String titles;    //标题
 
+    private Integer replyState;  //是否回复   为1  已评论  ///为0  未评论
+
 }
