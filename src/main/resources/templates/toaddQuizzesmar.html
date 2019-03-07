@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <script th:src="@{~/common/myJs.jsp}"></script>
+</head>
+<style>
+    .row{
+        margin-top:10px;
+    }
+</style>
+
+<body>
+<div class="container-fluid">
+    <form id="addForm" class="form-horizontal">
+        <div class="row">
+            <div class="col-xs-2">智力标题:</div>
+            <div class="col-xs-10">
+                <input type="text" class="form-control" name="title">
+            </div>
+            <div class="col-xs-2">智力选择题A:</div>
+            <div class="col-xs-10">
+                <textarea rows="" cols="" class="form-control" name="one"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-2">智力选择题B:</div>
+            <div class="col-xs-10">
+                <textarea rows="" cols="" class="form-control" name="two"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-2">智力选择题C:</div>
+            <div class="col-xs-10">
+                <textarea rows="" cols="" class="form-control" name="three"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-2">智力选择题D:</div>
+            <div class="col-xs-10">
+                <textarea rows="" cols="" class="form-control" name="five"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-2">智力答案:</div>
+            <div class="col-xs-10">
+                <textarea rows="" cols="" class="form-control" name="parse"></textarea>
+            </div>
+        </div>
+
+    </form>
+</div>
+</body>
+</html>

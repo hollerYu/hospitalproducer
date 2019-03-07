@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script th:src="@{~/common/myJs.jsp}"></script>
+</head>
+<style>
+    .add-dialog{
+        width:800px;
+    }
+</style>
+<body>
+<!--onclick="opendAddDialog()"-->
+<form id="pro_from" class="form-inline">
+    <button Class="btn btn-info glyphicon glyphicon-plus" onclick="opendAddDialog()" type="button">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+    </button>
+    <button id="btn_edit" type="button" class="btn btn-default">
+        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+    </button>
+    <button id="btn_delete" onclick="btn_deleteInfo()" type="button" class="btn btn-default">
+        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>批量删除
+    </button>
+</form>
+<table id="tableId"></table>
+</body>
+<script type="text/javascript">
+
+    $(function () {
+        init();
+    })
+
+    var res;
+    function createAddContent(url){
+        $.ajax({
+            url:url,
+            async:false,
+            success:function(data){
+                res = data;
+            }
+        });
+        return res;
+    }
+    //新增
+    function opendAddDialog(){
+        bootbox.dialog({
+            size:'big',
+            title:'添加智力题',
+            message:createAddContent("/toaddQuizzesmarHtml"),
+            closeButton: true,
+            buttons : {
+                "success" : {
+                    "label" : "<i class='icon-ok'></i> 保存",
+                    "className" : "btn-sm btn-success",
+                    "callback" : function() {
+                        $.ajax({
+                            url:'/addQuizzesmar',
+                            type:'post',
+                            data:$("#addForm").serialize(),
+                            dataType:'json',
+                            success:function(data){
+                                $('#tableId').bootstrapTable('refresh');
+                            }
+                        });
+                    }
+                },
+                "cancel" : {
+                    "label" : "<i class='icon-info'></i> 取消",
+                    "className" : "btn-sm btn-danger",
+                    "callback" : function() {
+
+                    }
+                }
+            }
+
+        });
+    }
+    //分页查询
+    function init() {
+        $('#tableId').bootstrapTable({
+            toolbar: '#toolbar',
+            url: "/queryQuizzesmarlist",
+            pagination: true, //是否展示分页
+            pageList: [1, 3, 5, 10, 50],//分页组件
+            pageNumber: 1,
+            pageSize: 3,//默认每页条数
+            showColumns: false,//是否显示 内容列下拉框
+            showToggle: false,//是否显示 切换试图（table/card）按钮
+            showPaginationSwitch: false,//是否显示 数据条数选择框
+            showRefresh: false,//是否显示刷新按钮
+            detailView: false,//设置为 true 可以显示详细页面模式。
+            showFooter: false,//是否显示列脚
+            clickToSelect: false, //是否启用点击选中行
+            sidePagination: 'server',//分页方式：client客户端分页，server服务端分页（*
+            // striped:true,
+            queryParams: function () {
+                return {
+                    page: this.pageNumber,
+                    rows: this.pageSize,
+                };
+            },
+            columns: [
+                {field: 'aaa', title: 'xxx', width: 60, align: 'center', checkbox: true},
+                {field: 'id', title: '智力编号', width: 60, align: 'center'},
+                {field: 'title', title: '智力标题', width: 60, align: 'center'},
+                {field: 'one', title: '智力选择题A', width: 60, align: 'center'},
+                {field: 'two', title: '智力选择题B', width: 60, align: 'center'},
+                {field: 'three', title: '智力选择题C', width: 60, align: 'center'},
+                {field: 'five', title: '智力选择题D', width: 60, align: 'center'},
+                {field: 'parse', title: '智力答案', width: 60, align: 'center'}
+            ]
+
+        })
+    }
+</script>
+</html>
