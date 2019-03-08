@@ -10,9 +10,8 @@
  */
 package com.jk.service.impl;
 
-import com.jk.mapper.QuizzesmarMapper;
+
 import com.jk.service.QuizzesmarService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -26,7 +25,5 @@ import org.springframework.stereotype.Service;
 @Service
 public class QuizzesmarServiceImpl implements QuizzesmarService {
 
-    @Autowired
-    private QuizzesmarMapper quizzesmarMapper;
 
 }
