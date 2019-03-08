@@ -73,9 +73,7 @@ public class QuizzesmarController {
     @RequestMapping("addQuizzesmar")
     @ResponseBody
     public String add(Quizzesmar book){
-
         mongoTemplate.insert(book);
-
         return "success";
     }
 

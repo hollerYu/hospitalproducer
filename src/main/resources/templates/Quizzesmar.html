@@ -13,7 +13,7 @@
 <body>
 <!--onclick="opendAddDialog()"-->
 <form id="pro_from" class="form-inline">
-    <button Class="btn btn-info glyphicon glyphicon-plus" onclick="opendAddDialog()" type="button">
+    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal" type="button">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
     </button>
     <button id="btn_edit" type="button" class="btn btn-default">
@@ -24,57 +24,84 @@
     </button>
 </form>
 <table id="tableId"></table>
+
+
+<div class="modal fade" id="myModal"  data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">提问</h4>
+            </div>
+            <div class="modal-body">
+                <p>问题描述</p>
+
+                <div class="container-fluid">
+                    <form id="addForm" class="form-horizontal">
+                        <div class="row">
+                            <div class="col-xs-2">智力标题:</div>
+                            <div class="col-xs-10">
+                                <input type="text" class="form-control" name="title">
+                            </div>
+                            <div class="col-xs-2">智力选择题A:</div>
+                            <div class="col-xs-10">
+                                <textarea rows="" cols="" class="form-control" name="one"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-2">智力选择题B:</div>
+                            <div class="col-xs-10">
+                                <textarea rows="" cols="" class="form-control" name="two"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-2">智力选择题C:</div>
+                            <div class="col-xs-10">
+                                <textarea rows="" cols="" class="form-control" name="three"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-2">智力选择题D:</div>
+                            <div class="col-xs-10">
+                                <textarea rows="" cols="" class="form-control" name="five"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-2">智力答案:</div>
+                            <div class="col-xs-10">
+                                <textarea rows="" cols="" class="form-control" name="parse"></textarea>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-default" type="button">关闭</button>
+                <button class="btn btn-primary" onclick="opendAddDialog()"  type="button">提交</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<div style="height:200px"></div>
+
 </body>
 <script type="text/javascript">
-
     $(function () {
         init();
     })
-
-    var res;
-    function createAddContent(url){
-        $.ajax({
-            url:url,
-            async:false,
-            success:function(data){
-                res = data;
-            }
-        });
-        return res;
-    }
     //新增
     function opendAddDialog(){
-        bootbox.dialog({
-            size:'big',
-            title:'添加智力题',
-            message:createAddContent("/toaddQuizzesmarHtml"),
-            closeButton: true,
-            buttons : {
-                "success" : {
-                    "label" : "<i class='icon-ok'></i> 保存",
-                    "className" : "btn-sm btn-success",
-                    "callback" : function() {
-                        $.ajax({
-                            url:'/addQuizzesmar',
-                            type:'post',
-                            data:$("#addForm").serialize(),
-                            dataType:'json',
-                            success:function(data){
-                                $('#tableId').bootstrapTable('refresh');
-                            }
-                        });
-                    }
-                },
-                "cancel" : {
-                    "label" : "<i class='icon-info'></i> 取消",
-                    "className" : "btn-sm btn-danger",
-                    "callback" : function() {
-
-                    }
+            $.ajax({
+                url:'/addQuizzesmar',
+                type:'post',
+                data:$("#addForm").serialize(),
+                dataType:'json',
+                success:function(data){
+                    $('#tableId').bootstrapTable('refresh');
                 }
-            }
-
-        });
+            });
     }
     //分页查询
     function init() {
