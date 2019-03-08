@@ -15,6 +15,7 @@ import com.jk.bean.Quizzesmar;
 import com.jk.service.QuizzesmarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -76,5 +77,16 @@ public class QuizzesmarController {
         mongoTemplate.insert(book);
         return "success";
     }
+
+    //批量删除
+    @RequestMapping("deleteInfo")
+    @ResponseBody
+    public String deleteInfo(String[] ids){
+        Quizzesmar quizzesmar = new Quizzesmar();
+        Query query = new Query();
+        mongoTemplate.remove(query.addCriteria(Criteria.where("id").in(ids)),quizzesmar.getClass());
+        return "1";
+    }
+
 
 }

@@ -16,11 +16,8 @@
     <button class="btn btn-primary" data-toggle="modal" data-target="#myModal" type="button">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
     </button>
-    <button id="btn_edit" type="button" class="btn btn-default">
-        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-    </button>
     <button id="btn_delete" onclick="btn_deleteInfo()" type="button" class="btn btn-default">
-        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>批量删除
+        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
     </button>
 </form>
 <table id="tableId"></table>
@@ -128,17 +125,46 @@
                 };
             },
             columns: [
-                {field: 'aaa', title: 'xxx', width: 60, align: 'center', checkbox: true},
+                {field: 'aaa', title: 'xxx', align: 'center', checkbox: true},
                 {field: 'id', title: '智力编号', width: 60, align: 'center'},
                 {field: 'title', title: '智力标题', width: 60, align: 'center'},
-                {field: 'one', title: '智力选择题A', width: 60, align: 'center'},
-                {field: 'two', title: '智力选择题B', width: 60, align: 'center'},
-                {field: 'three', title: '智力选择题C', width: 60, align: 'center'},
-                {field: 'five', title: '智力选择题D', width: 60, align: 'center'},
-                {field: 'parse', title: '智力答案', width: 60, align: 'center'}
+                {field: 'one', title: '智力选择题A', width: 100, align: 'center'},
+                {field: 'two', title: '智力选择题B', width: 100, align: 'center'},
+                {field: 'three', title: '智力选择题C', width: 100, align: 'center'},
+                {field: 'five', title: '智力选择题D', width: 100, align: 'center'},
+                {field: 'parse', title: '智力答案', width: 100, align: 'center'}
             ]
 
         })
+    }
+
+    //批量删除
+    function btn_deleteInfo(){
+        //获取所有被选中的记录
+        var rows = $("#tableId").bootstrapTable('getSelections');
+        if(rows.length == 0){
+            alert("请选择要删除的数据");
+        }else if(confirm("确定删除吗")){
+            var ids = new Array();
+            for(var i= 0;i<rows.length;i++){
+                ids+= ids+=","+rows[i].id;
+
+            }
+            $.ajax({
+                url:'deleteInfo',
+                data:{ids:ids},
+                type:'post',
+                dataType:'json',
+                success:function(data){
+                    alert("删除成功");
+                    //重新加载记录
+                    //重新加载数据
+                    $("#tableId").bootstrapTable('refresh');
+                }
+
+            });
+
+        }
     }
 </script>
 </html>
