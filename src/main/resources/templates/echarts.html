@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/js/echarts/echarts.js"></script>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+
+</head>
+<body>
+<center>
+    <div id="main" style="width: 600px;height:400px;"></div>
+</center>
+<button type="button" onclick="getChart()">获取男女比例数据</button>
+<button type="button" onclick="getChart02()">获取医疗机构比例数据</button>
+</body>
+<script type="text/javascript">
+
+    function getChart(){
+        var myChart = echarts.init(document.getElementById('main'));
+        $.get('/echarts/getChart', function (data) {
+            myChart.setOption({
+                legend:{data:data.name},
+                series: {data: data},
+            })
+        });
+        option = {
+            title: {
+                text: '调研问卷男女比例',
+                subtext: '纯属虚构',
+                x: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: []
+            },
+            series: [
+                {
+                    name: '男女比例',
+                    type: 'pie',
+                    radius: '55%',
+                    data: [],
+                    center: ['50%', '60%'],
+                    /* data:[
+                         {value:335, name:'直接访问'},
+                         {value:310, name:'搜索引擎'}
+
+                     ]*/
+
+                }
+            ]
+        };
+        myChart.setOption(option);
+    }
+
+    function getChart02(){
+        var myChart = echarts.init(document.getElementById('main'));
+        $.get('/echarts/getChart02', function (data) {
+            myChart.setOption({
+                legend:{data:data.name},
+                series: {data: data},
+            })
+        });
+        option = {
+            title: {
+                text: '调研问卷医院',
+                subtext: '纯属虚构',
+                x: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: []
+            },
+            series: [
+                {
+                    name: '医院比例',
+                    type: 'pie',
+                    radius: '55%',
+                    data: [],
+                    center: ['50%', '60%'],
+                    /* data:[
+                         {value:335, name:'直接访问'},
+                         {value:310, name:'搜索引擎'}
+
+                     ]*/
+
+                }
+            ]
+        };
+        myChart.setOption(option);
+    }
+
+</script>
+</html>
