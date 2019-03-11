@@ -1,4 +1,4 @@
-package com.jk.service.impl.impl;
+package com.jk.service.impl;
 
 import com.jk.mapper.ReplyMapper;
 import com.jk.service.ReplyService;

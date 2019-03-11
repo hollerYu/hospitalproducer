@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script th:src="@{~/common/myJs.jsp}"></script>
+</head>
+<body>
+<div id="div-button">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+        新增
+    </button>
+    <button  class="btn btn-primary"  onclick="getUpOrDown(1)"> 开启定时器</button>
+    <button  class="btn btn-primary"  onclick="getUpOrDown(2)"> 关闭定时器</button>
+</div>
+<br>
+<!-- 模态框 -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- 模态框头部 -->
+            <div class="modal-header">
+                <h4 class="modal-title">新增文章信息</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- 模态框主体 -->
+            <div class="modal-body" id="sssss">
+                <div class="container mt-3">
+                    <form id="sss">
+                        <input type="hidden" name="id" id="id">
+                        <div class="input-group mb-3" style="width: 74%">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">姓名</span>
+                            </div>
+                            <input type="text" name="name" placeholder="姓名" class="form-control">
+                        </div>
+                        <br/>
+                        <div class="input-group mb-3" style="width: 74%">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">职位</span>
+                            </div>
+                            <input type="text" name="position" placeholder="职位" class="form-control">
+                        </div>
+                        <br/>
+                        <div class="input-group mb-3" style="width: 74%">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">所属医院</span>
+                            </div>
+                            <input type="text" name="address" placeholder="所属医院" class="form-control">
+                        </div>
+                        <br/>
+                        <div class="input-group mb-3" style="width: 74%">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">图片路径</span>
+                            </div>
+                            <input type="text" name="img" placeholder="手动图片路径" class="form-control">
+                        </div>
+                        <br/>
+                        <div class="input-group mb-3" style="width: 74%">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">标题</span>
+                            </div>
+                            <input type="text" name="title" placeholder="标题" class="form-control">
+                        </div>
+                        <br/>
+                        <div class="input-group mb-3" style="width: 74%">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">观点</span>
+                            </div>
+                            <input type="text" name="viewpoint" placeholder="观点" class="form-control">
+                        </div>
+                        <br/>
+                        <div class="input-group mb-3" style="width: 74%">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">内容详情</span>
+                            </div>
+                            <textarea class="form-control" rows="3" name="details" placeholder="内容"></textarea>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- 模态框底部 -->
+            <div class="modal-footer">
+                <button type="button" onclick="addMongo()" class="btn btn-primary">保存</button>
+                <button type="button" class="btn btn-secondary" onclick="closed()" data-dismiss="modal">关闭</button>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- 模态框 -->
+<div class="modal fade" id="myModal2">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- 模态框头部 -->
+            <div class="modal-header">
+                <h4 class="modal-title">模态框头部</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- 模态框主体 -->
+            <div class="modal-body">
+                <input type="text" id="goTime" placeholder="发布时间" readonly="readonly" class="form-control date"/>
+            </div>
+
+            <!-- 模态框底部 -->
+            <div class="modal-footer">
+                <button type="button" onclick="updateStatus()" class="btn btn-primary">发布</button>
+                <button type="button" class="btn btn-secondary" onclick="closed()" data-dismiss="modal">关闭</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<table id="myTable"></table>
+</body>
+<script>
+    //data框
+    $('.date').datetimepicker({
+        language: 'zh-CN',//显示中文
+        format: 'yyyy-mm-dd hh:ii:ss',//显示格式
+        minView: "hour",//设置只显示到月份
+        //initialDate: new Date(),//初始化当前日期
+        autoclose: true,//选中自动关闭
+        todayBtn: true//显示今日按钮
+    });
+    $(function () {
+        getMessageToHtml();
+    })
+    var spId = null;
+
+    function getMessageToHtml() {
+        $('#myTable').bootstrapTable({
+            url: '/specialist/getSpecialistAll',         //请求后台的URL（*）
+            method: 'get',                      //请求方式（*）
+            toolbar: '#div-button',                //工具按钮用哪个容器
+            striped: true,                      //是否显示行间隔色
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            sortable: false,                     //是否启用排序
+            sortOrder: "asc",                   //排序方式
+            pagination: true,                   //是否显示分页（*）
+            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+            pageNumber: 1,                       //初始化加载第一页，默认第一页
+            pageSize: 5,                       //每页的记录行数（*）
+            pageList: [5, 10, 20, 50],        //可供选择的每页的行数（*）
+            /* queryParams: function (params) { // 请求服务器数据时发送的参数，可以在这里添加额外的查询参数，返回false则终止请求
+				console.log(params)
+		  		return { //这里return值就是请求 url属性时携带的参数
+			     	pageSize: params.limit, // 每页要显示的数据条数
+			        offset: params.offset, // 每页显示数据的开始行号
+			        sear_name:params.search,
+			        email:$("#exampleInputEmail1").val()
+		        }
+	      	}, */
+            queryParams: function (params) {
+                return {
+                    page: this.pageNumber,
+                    rows: this.pageSize,
+                    //loginAcct:params.search,
+                };
+            },//传递参数（*）
+            search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+            strictSearch: true,
+            showColumns: true,                  //是否显示所有的列
+            showRefresh: true,                  //是否显示刷新按钮
+            minimumCountColumns: 2,             //最少允许的列数
+            clickToSelect: true,                //是否启用点击选中行
+            height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+            uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
+            showToggle: true,                    //是否显示详细视图和列表视图的切换按钮
+            cardView: false,                    //是否显示详细视图
+            detailView: false,                   //是否显示父子表
+            columns: [
+                {field: '111', checkbox: true},
+                {field: 'name', title: '名称'},
+                {field: 'position', title: '称号'},
+                {field: 'address', title: '所属医院'},
+                {field: 'title', title: '标题'},
+                {field: 'viewpoint', title: '观点'},
+                {field: 'details', title: '详情'},
+                {field: 'look', title: '观看人数'},
+                {field: 'medal', title: '获得勋章'},
+                {
+                    field: 'status', title: '状态 ', formatter: function (value, row, index) {
+                        if (value == 1) {
+                            return "已发布";
+                        } else {
+                            return "未发布";
+                        }
+                    }
+                },
+                {
+                    field: 'img', title: '图片', formatter: function (value, row, index) {
+                        return "<img alt='图片' src='" + value + "' width='40px'>";
+                    }
+                },
+                {field: 'creatTime', title: '发布时间'},
+
+                {
+                    field: '222', title: '操作', formatter: function (value, row, index) {
+                        if (row.status == 0) {
+                            return '<button onclick="deleteItem(' + row.id + ',\'' + row.name + '\')" class="btn btn-error" >删除</button><button type="button" class="btn btn-primary" onclick="getId(' + row.id + ')" data-toggle="modal" data-target="#myModal2">发布</button>';
+                        } else {
+                            return '<button onclick="deleteItem(' + row.id + ',\'' + row.name + '\')" class="btn btn-error" >删除</button><button onclick="updateStatus2(' + row.id + ')" class="btn btn-error" >下架</button>';
+                        }
+                    }
+                }
+            ],
+            onLoadSuccess: function () {  //加载成功时执行
+                console.info("加载成功");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.info("加载数据失败");
+            }
+        });
+    }
+
+    function deleteItem(id, name) {
+        bootbox.confirm("你确定要删除" + name + "的文章吗?", function (result) {
+            if (result) {
+                $.ajax({
+                    url: '/specialist/deleteOne',
+                    type: 'post',
+                    data: {"id": id},
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data == 1) {
+                            $('#myTable').bootstrapTable('refresh');
+                        }
+                    }
+                })
+            }
+
+        })
+    }
+
+    function addMongo() {
+        $.ajax({
+            url: "/specialist/saveEssay",
+            async: true,
+            type: "POST",
+            data: $("#sss").serialize(),
+            dataType: "json",
+            success: function (data) {
+                if (data == 1) {
+                    $('body').on('hidden.bs.modal', '.modal', function () {
+                        $(this).removeData('bs.modal');
+                    });
+                    layer.msg('上传成功!');
+                    window.location.reload();
+                }
+            },
+            error: function (e) {
+                alert("网络连接失败，请您稍后再试！");
+            }
+        });
+    }
+
+    function closed() {
+        document.getElementById("sss").reset();
+    }
+
+    function getId(id) {
+        spId = id;
+    }
+
+    function updateStatus() {
+        $.ajax({
+            url: "/quartz/task/aa",
+            async: true,
+            type: "POST",
+            data: {id: spId, goTime: $("#goTime").val()},
+            dataType: "json",
+            success: function (data) {
+                if (data == 1) {
+                    $('body').on('hidden.bs.modal', '.modal', function () {
+                        $(this).removeData('bs.modal');
+                    });
+                    layer.msg('发布成功!');
+                    window.location.reload();
+                }
+            },
+            error: function (e) {
+                alert("网络连接失败，请您稍后再试！");
+            }
+        });
+
+    }
+
+    function updateStatus2(id) {
+        $.ajax({
+            url: "/specialist/updateStatus",
+            async: true,
+            type: "POST",
+            data: {id: id},
+            dataType: "json",
+            success: function (data) {
+                if (data == 1) {
+                    layer.msg('下架成功!');
+                    $('#myTable').bootstrapTable('refresh');
+                }
+            },
+            error: function (e) {
+                alert("网络连接失败，请您稍后再试！");
+            }
+        });onclick="(1)"
+    }
+    function getUpOrDown(sum) {
+        if (sum ==1){
+            $.ajax({
+                url: "/quartz/task/startCron2",
+                async: true,
+                type: "POST",
+                dataType: "json",
+                success: function (data) {
+                    if (data == 1) {
+                        layer.msg('开启成功!');
+                    }
+                },
+                error: function (e) {
+                    alert("网络连接失败，请您稍后再试！");
+                }
+            });
+        } else{
+            $.ajax({
+                url: "/quartz/task/stopCron2",
+                async: true,
+                type: "POST",
+                dataType: "json",
+                success: function (data) {
+                    if (data == 1) {
+                        layer.msg('关闭成功!');
+                    }
+                },
+                error: function (e) {
+                    alert("网络连接失败，请您稍后再试！");
+                }
+            });
+        }
+
+    }
+</script>
+</html>
