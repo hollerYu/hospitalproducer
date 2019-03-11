@@ -21,7 +21,7 @@
     </button>
 </form>
 
-    <table id="tableId"></table>
+<table id="tableId"></table>
 
 <div class="modal fade" id="myModal"  data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog">
@@ -64,12 +64,17 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-2">智力答案:</div>
+                            <div class="col-xs-2">答案解析:</div>
                             <div class="col-xs-10">
                                 <textarea rows="" cols="" class="form-control" name="parse"></textarea>
                             </div>
                         </div>
-
+                        <div class="row">
+                            <div class="col-xs-2">智力答案:</div>
+                            <div class="col-xs-10">
+                                <textarea rows="" cols="" class="form-control" name="result"></textarea>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -90,15 +95,15 @@
     })
     //新增
     function opendAddDialog(){
-            $.ajax({
-                url:'/addQuizzesmar',
-                type:'post',
-                data:$("#addForm").serialize(),
-                dataType:'json',
-                success:function(data){
-                    $('#tableId').bootstrapTable('refresh');
-                }
-            });
+        $.ajax({
+            url:'/addQuizzesmar',
+            type:'post',
+            data:$("#addForm").serialize(),
+            dataType:'json',
+            success:function(data){
+                $('#tableId').bootstrapTable('refresh');
+            }
+        });
     }
     //分页查询
     function init() {
@@ -132,7 +137,23 @@
                 {field: 'two', title: '智力选择题B', width: 100, align: 'center'},
                 {field: 'three', title: '智力选择题C', width: 100, align: 'center'},
                 {field: 'five', title: '智力选择题D', width: 100, align: 'center'},
-                {field: 'parse', title: '智力答案', width: 100, align: 'center'}
+                {field: 'parse', title: '答案解析', width: 100, align: 'center'},
+                {field: 'result', title: '智力答案', width: 100, align: 'center',
+                    formatter: function(value,row,index){
+                        if(value==1){
+                            return "A";
+                        }
+                        if(value==2){
+                            return "B";
+                        }
+                        if(value==3){
+                            return "C";
+                        }
+                        if(value==4){
+                            return "D";
+                        }
+                    }
+                }
             ]
 
         })

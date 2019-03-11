@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script th:src="@{~/common/myJs.jsp}"></script>
+</head>
+<body>
+
+<div id="toolbar">
+    <input type='button' class="btn btn-primary" data-toggle="modal" data-target="#myModal" value='新增'>
+    <button id="btn_delete" onclick="btn_deleteInfo()" type="button" class="btn btn-default">
+        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+    </button>
+</div>
+
+<table id="myList"></table>
+<!--模态框-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">提问</h4>
+            </div>
+            <div class="modal-body">
+                <p>问题描述</p>
+
+                <div class="container-fluid">
+                    <form id="addForm" class="form-horizontal">
+                        <div class="row">
+                            <div class="col-xs-2">专家姓名</div>
+                            <div class="col-xs-10">
+                                <input type="text" class="form-control" name="name">
+                            </div>
+                            <div class="col-xs-2">毕业学院</div>
+                            <div class="col-xs-10">
+                                <textarea rows="" cols="" class="form-control" name="address"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-2">教师图片</div>
+                            <div class="col-xs-10">
+                                <textarea name="dataimg" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-2">专家分类</div>
+                            <div class="col-xs-10">
+                                <select class="form-control" name="fenlei">
+                                    <option value="1">权威专家</option>
+                                    <option value="2">美赞专家</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- 模态框底部 -->
+            <div class="modal-footer">
+                <button type="button" onclick="addForm()" class="btn btn-primary">保存</button>
+                <button type="button" class="btn btn-secondary" onclick="closed()" data-dismiss="modal">关闭</button>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+</body>
+<script type="text/javascript">
+    $(function(){
+        initDategrid();
+    })
+    function initDategrid(){
+        $('#myList').bootstrapTable({
+            toolbar:'#toolbar',
+            url:"/querySpecialist",
+            pagination:true, //是否展示分页
+            pageList:[1,3,5, 10, 50],//分页组件
+            pageNumber:1,
+            pageSize:3,//默认每页条数
+            showColumns:false,//是否显示 内容列下拉框
+            showToggle:false,//是否显示 切换试图（table/card）按钮
+            showPaginationSwitch:false,//是否显示 数据条数选择框
+            showRefresh:true,//是否显示刷新按钮
+            detailView:false,//设置为 true 可以显示详细页面模式。
+            showFooter:false,//是否显示列脚
+            clickToSelect: true, //是否启用点击选中行
+            sidePagination:'server',//分页方式：client客户端分页，server服务端分页（*
+            striped:true,
+            queryParams:function(params){
+
+                return{
+                    page: this.pageNumber,
+                    rows: this.pageSize,
+                };
+            },
+            columns:[
+                {field:'',title:'',width:60,align:'center',checkbox:true},
+                {field:'id',title:'ID',width:100,align:'center',editor:'text'},
+                {field:'name',title:'专家姓名',width:100,align:'center',editor:'text'},
+                {field:'address',title:'毕业学院',width:100,align:'center',editor:'text'},
+                {field:'dataimg',title:'教师图片',width:60,align:'center',
+                    formatter: function(value,row,index){
+                        return "<img width='60' src="+value+">";
+                    }
+                },
+                {field:'fenlei',title:'专家分类',width:60,align:'center',
+                    formatter: function(value,row,index){
+                        if(value==1){
+
+                          return "权威专家";
+                        }
+                        if(value==2){
+
+                            return "美赞专家";
+                        }
+                    }
+                },
+            ],
+        })
+    }
+    //增加专家
+    function addForm(){
+     var name = $("[name='name']").val();
+     var address = $("[name='address']").val();
+     var dataimg = $("[name='dataimg']").val();
+     var fenlei = $("[name='fenlei']").val();
+      $.ajax({
+       url:"/addForm",
+       type:"post",
+       data:{name:name,
+       address:address,
+       dataimg:dataimg,
+       fenlei:fenlei
+       },
+       success:function(data){
+         alert(data);
+       },
+       error:function(){
+         alert(data);
+       }
+     })
+    }
+
+    //批量删除
+    function btn_deleteInfo(){
+        //获取所有被选中的记录
+        var rows = $("#myList").bootstrapTable('getSelections');
+        if(rows.length == 0){
+            alert("请选择要删除的数据");
+        }else if(confirm("确定删除吗")){
+            var ids = new Array();
+            for(var i= 0;i<rows.length;i++){
+                ids+= ids+=","+rows[i].id;
+
+            }
+            var idstwo = ids.substr(1);
+            $.ajax({
+                url:'/deleteInfotwo',
+                data:{ids:idstwo},
+                type:'post',
+                dataType:'json',
+                success:function(data){
+                    alert("删除成功");
+                    location.reload();
+                    $("#tableId").bootstrapTable('refresh');
+                }
+
+            });
+
+        }
+    }
+
+
+
+
+</script>
+
+</html>
