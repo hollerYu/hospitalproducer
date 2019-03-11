@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>问卷调查后台控制管理</title>
+    <script th:src="@{~/common/myJs.jsp}"></script>
+</head>
+<body>
+
+<table id="tableId"></table>
+
+<script>
+    $(function(){
+
+        initDategrid();
+
+    })
+    //查询  分页
+    function initDategrid(){    //初始化datagrid控件
+
+        $('#tableId').bootstrapTable({
+            toolbar:'#toolbar',
+            url:'/survey/selectSurvey',
+            pagination:true, //是否展示分页
+            pageList:[1,3,5, 10, 50],//分页组件
+            pageNumber:1,
+            pageSize:5,//默认每页条数
+            //search:true,//是否显示搜索框
+            //searchText:'试试',//初始化搜索文字
+            showColumns:false,//是否显示 内容列下拉框
+            showToggle:false,//是否显示 切换试图（table/card）按钮
+            showPaginationSwitch:false,//是否显示 数据条数选择框
+            showRefresh:true,//是否显示刷新按钮
+            detailView:false,//设置为 true 可以显示详细页面模式。
+            showFooter:false,//是否显示列脚
+            clickToSelect: true, //是否启用点击选中行
+            sidePagination:'server',//分页方式：client客户端分页，server服务端分页（*
+            striped:true,
+            queryParams:function(params){
+                //var carName = $('#carName').val();
+                //var startTime = $('#startTime').val();
+                //var endTime = $('#endTime').val();
+                //var carTypeId=$("#carTypeId").val();
+                return{
+                    page: this.pageNumber,
+                    rows: this.pageSize,
+                    //carName:carName,
+                    //startTime:startTime,
+                    //endTime:endTime,
+                };
+            },
+            columns:[
+
+                {field:'aaa',title:'discuId',width:60,align:'center',checkbox:true},
+                {field:'questionOne',title:'问题',width:150,align:'center',},
+                {field:'answerOne',title:'A选项',width:100,align:'center',editor:'text'},
+                {field:'answerTwo',title:'B选项',width:100,align:'center',editor:'text'},
+                {field:'answerThree',title:'C选项',width:110,align:'center',},
+                {field:'answerFour',title:'D选项',width:100,align:'center',},
+                {field:'answerFive',title:'E选项',width:100,align:'center',},
+                {field:'answerSix',title:'F选项',width:100,align:'center',},
+
+                {field:'xxx',title:'操作',width:100,align:'center',
+
+                    formatter: function(value,row,index){
+                        var butt="";
+                        butt = "<input type='button' class='btn btn-error' value='修改' onclick='returnSurveyById(\""+row.id+"\")'>";
+                        return butt;
+                    },
+                },
+            ],
+        });
+    }
+
+    // 新增 跳转页面必备
+    var res;
+    function createAddContent(url){
+        $.ajax({
+            url:url,
+            async:false,
+            success:function(data){
+                res = data;
+            }
+        });
+        return res;
+    }
+
+    //去回显
+    function returnSurveyById(id) {
+        bootbox.dialog({
+            size: 'big',
+            title: '修改',             //去回显界面
+            message: createAddContent('/survey/toUpdateHtml'),
+            closeButton: true,
+            //className:'add-dialog',
+            buttons: {
+                'success': {
+                    "label": "<i class='icon-ok'></i>修改",
+                    "className": "btn-sm btn-success",
+                    "callback": function () {
+                        $.ajax({            //修改方法
+                            url: '/survey/updateSurvey',
+                            type: 'post',
+                            data: $('#addForm').serialize(),
+                            dataType: "json",
+                            success: function (data) {
+                                if (data) {
+                                    layer.msg("修改成功!!!");
+                                    searcher();
+                                }else{
+                                    layer.msg("失败了!!");
+                                    searcher();
+                                }
+                            }
+                        })
+                    }
+                },
+                "cancel": {
+                    "label": "<i class='icon-info'></i> 取消",
+                    "className": "btn-sm btn-danger",
+                    "handler": function () {
+                    }
+                }
+            }
+        })
+        //回显
+        $.ajax({
+            url: '/survey/querySurveyById',
+            type: 'post',
+            data: {id: id},
+            dataType: 'json',
+            success: function (data) {
+            console.log(data)
+                $("#discuIdEdit").val(data.id)
+                $("#questionOneEdit").val(data.questionOne)
+                $("#discuCountEdit").val(data.answerOne)
+                $("#answerTwoEdit").val(data.answerTwo)
+                $("#answerThreeEdit").val(data.answerThree)
+                $("#answerFourEdit").val(data.answerFour)
+                $("#answerFiveEdit").val(data.answerFive)
+                $("#answerSixEdit").val(data.answerSix)
+
+            }
+        })
+    }
+
+    //条查
+    function searcher(){
+        $('#tableId').bootstrapTable('refresh');
+    }
+
+</script>
+</body>
+</html>
