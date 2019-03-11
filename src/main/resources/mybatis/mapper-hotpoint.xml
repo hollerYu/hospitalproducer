@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jk.mapper.HotPointMapper">
+
+    <select id="getHotpoint" resultType="com.jk.bean.HotPoint">
+      select * from y_hotspot limit #{start},#{end}
+    </select>
+
+    <delete id="deleteOne" parameterType="java.lang.Integer" >
+    delete from y_hotspot
+    where id = #{id}
+  </delete>
+
+    <insert id="saveEssay" parameterType="com.jk.bean.HotPoint">
+        insert into y_hotspot (id,titles,photo,seeCount,times,content) values
+        (#{id},#{titles},#{photo},#{seeCount},#{times},#{content},)
+    </insert>
+</mapper>
