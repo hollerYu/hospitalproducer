@@ -77,7 +77,7 @@ public class SpecialistController {
     @RequestMapping("/getDown")
     public String getDown(Integer id,Integer rank){
         Specialist specialist = specialistService.getIdByRank02(rank);
-        if(specialist == null){
+        if(specialist != null){
             //++，交换排序值，非选中
             specialistService.updateRankById(specialist.getId(),rank);
             //--，交换排序值，选中的
