@@ -50,4 +50,36 @@ public class SpecialistServiceImpl implements SpecialistService {
     public void updateStatusDown(Integer id) {
         specialistMapper.updateStatusDown(id);
     }
+
+    @Override
+    public Specialist getIdByRank(Integer rank) {
+        return specialistMapper.getIdByRank(rank);
+    }
+
+    @Override
+    public void updateRankById(int rankId, Integer rank) {
+        specialistMapper.updateRankById(rankId,rank);
+    }
+
+    @Override
+    public Specialist getIdByRank02(Integer rank) {
+        return specialistMapper.getIdByRank02(rank);
+    }
+
+    @Override
+    public Specialist getIdByRank03(Integer rank) {
+        return specialistMapper.getIdByRank03(rank);
+    }
+
+    @Override
+    public Specialist getIdByRank04(Integer rank) {
+        return specialistMapper.getIdByRank04(rank);
+    }
+
+    @Override
+    public int getMaxRank() {
+
+        return specialistMapper.getMaxRank();
+    }
+
 }

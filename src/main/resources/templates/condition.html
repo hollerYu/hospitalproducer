@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script th:src="@{~/common/myJs.jsp}"></script>
+</head>
+<body>
+<div id="div-button">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+        新增
+    </button>
+</div>
+<!-- 模态框 -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- 模态框头部 -->
+            <div class="modal-header">
+                <h4 class="modal-title">新增MongoDB信息</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- 模态框主体 -->
+            <div class="modal-body" id="sssss">
+                <div class="container mt-3">
+                    <form id="sss">
+                        <input type="hidden" name="id" id="id">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">标题</span>
+                            </div>
+                            <input type="text" name="title" id="title" placeholder="标题" class="form-control">
+                        </div>
+                        <br/>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">副标题</span>
+                            </div>
+                            <input type="text" name="minTitle" id="minTitle" placeholder="副标题" class="form-control">
+                        </div>
+                        <br/>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">视屏路径</span>
+                            </div>
+                            <input type="text" name="videoPath" id="videoPath" placeholder="视屏路径" class="form-control">
+                        </div>
+                        <br/>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">详情</span>
+                            </div>
+                            <textarea class="form-control" rows="3" name="details" id="details"
+                                      placeholder="详情"></textarea>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- 模态框底部 -->
+            <div class="modal-footer">
+                <button type="button" onclick="addMongo()" class="btn btn-primary">保存</button>
+                <button type="button" class="btn btn-secondary" onclick="closed()" data-dismiss="modal">关闭</button>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<table class="table table-bordered comTable table1" id="myTable"></table>
+</body>
+<script>
+    $(function () {
+        getConditionToHtml();
+    })
+
+    function getConditionToHtml() {
+        $('#myTable').bootstrapTable({
+            url: '/condition/getCondition',         //请求后台的URL（*）
+            method: 'get',                      //请求方式（*）
+            toolbar: '#div-button',                //工具按钮用哪个容器
+            striped: true,                      //是否显示行间隔色
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            sortable: false,                     //是否启用排序
+            sortOrder: "asc",                   //排序方式
+            pagination: true,                   //是否显示分页（*）
+            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+            pageNumber: 1,                       //初始化加载第一页，默认第一页
+            pageSize: 5,                       //每页的记录行数（*）
+            pageList: [5, 10, 20, 50],        //可供选择的每页的行数（*）
+            /* queryParams: function (params) { // 请求服务器数据时发送的参数，可以在这里添加额外的查询参数，返回false则终止请求
+            console.log(params)
+              return { //这里return值就是请求 url属性时携带的参数
+                 pageSize: params.limit, // 每页要显示的数据条数
+                offset: params.offset, // 每页显示数据的开始行号
+                sear_name:params.search,
+                email:$("#exampleInputEmail1").val()
+            }
+          }, */
+            queryParams: function (params) {
+                return {
+                    page: this.pageNumber,
+                    rows: this.pageSize,
+                    //loginAcct:params.search,
+                };
+            },//传递参数（*）
+            search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+            strictSearch: true,
+            showColumns: true,                  //是否显示所有的列
+            showRefresh: true,                  //是否显示刷新按钮
+            minimumCountColumns: 2,             //最少允许的列数
+            clickToSelect: true,                //是否启用点击选中行
+            height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+            uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
+            showToggle: true,                    //是否显示详细视图和列表视图的切换按钮
+            cardView: false,                    //是否显示详细视图
+            detailView: false,                   //是否显示父子表
+            columns: [
+                {field: 'title', title: '标题'},
+                {field: 'minTitle', title: '副标题'},
+                {
+                    field: 'videoPath', title: '视屏', formatter: function (value, row, index) {
+                        return "<video controls loop  name='videoPath' align='center' style='width: 100px;height: 80px;'><source preload='metadata' src='" + value + "' type='video/mp4'></video>";
+                    }
+                },
+                {field: 'details', title: '详情'},
+
+                {
+                    field: '222', title: '操作', formatter: function (value, row, index) {
+                        return '<button onclick="deleteItem(' + row.id + ',\'' + row.title + '\')" class="btn btn-error" >删除</button><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="updateById(' + row.id + ')" >修改</button>';
+                    }
+                }
+            ],
+            onLoadSuccess: function () {  //加载成功时执行
+                console.info("加载成功");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.info("加载数据失败");
+            }
+        });
+    }
+
+    function deleteItem(id, name) {
+        bootbox.confirm("你确定要删除" + name + "的文章吗?", function (result) {
+            if (result) {
+                $.ajax({
+                    url: '/condition/deleteOne',
+                    type: 'post',
+                    data: {"id": id},
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data == 1) {
+                            $('#myTable').bootstrapTable('refresh');
+                        }
+                    }
+                })
+            }
+
+        })
+    }
+
+    function addMongo() {
+        $.ajax({
+            url: "/condition/saveOrUpdate",
+            async: true,
+            type: "POST",
+            data: $("#sss").serialize(),
+            dataType: "json",
+            success: function (data) {
+                if (data == 1) {
+                    $('body').on('hidden.bs.modal', '#myModal', function () {
+                        $(this).removeData('bs.modal');
+                    });
+                    layer.msg('成功!');
+                    window.location.reload();
+                }
+            },
+            error: function (e) {
+                alert("网络连接失败，请您稍后再试！");
+            }
+        });
+    }
+
+    function updateById(id) {
+        $.ajax({
+            url: "/condition/queryById",
+            type: "POST",
+            data: {id: id},
+            success: function (data) {
+                console.log(data)
+                $("#id").val(data.id);
+                $("#minTitle").val(data.minTitle);
+                $("#title").val(data.title);
+                $("#videoPath").val(data.videoPath);
+                $("#details").val(data.details);
+            },
+            error: function (e) {
+                alert("网络连接失败，请您稍后再试！");
+            }
+        });
+    }
+
+    function closed() {
+        document.getElementById("sss").reset();
+    }
+</script>
+</html>

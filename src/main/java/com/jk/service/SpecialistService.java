@@ -13,4 +13,17 @@ public interface SpecialistService {
     void updateStatus(Integer id);
 
     void updateStatusDown(Integer id);
+
+    Specialist getIdByRank(Integer rank);
+
+
+    void updateRankById(int rankId, Integer rank);
+
+    Specialist getIdByRank02(Integer rank);
+
+    Specialist getIdByRank03(Integer rank);
+
+    Specialist getIdByRank04(Integer rank);
+
+    int getMaxRank();
 }

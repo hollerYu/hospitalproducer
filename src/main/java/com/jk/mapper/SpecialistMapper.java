@@ -1,6 +1,7 @@
 package com.jk.mapper;
 
 import com.jk.bean.Specialist;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.HashMap;
@@ -29,4 +30,16 @@ public interface SpecialistMapper {
     void updateStatus(Integer id);
 
     void updateStatusDown(Integer id);
+
+    Specialist getIdByRank(Integer rank);
+
+    void updateRankById(@Param("rankId") int rankId, @Param("rank")Integer rank);
+
+    Specialist getIdByRank02(Integer rank);
+
+    Specialist getIdByRank03(Integer rank);
+
+    Specialist getIdByRank04(Integer rank);
+
+    int getMaxRank();
 }

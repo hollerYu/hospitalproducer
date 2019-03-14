@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.mapper.ConditionMapper" >
+  <resultMap id="BaseResultMap" type="com.jk.bean.Condition" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="minTitle" property="minTitle" jdbcType="VARCHAR" />
+    <result column="videoPath" property="videoPath" jdbcType="VARCHAR" />
+    <result column="details" property="details" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, minTitle, videoPath, details, title
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from l_condition
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getCondition" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from l_condition
+    limit #{start},#{end}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from l_condition
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jk.bean.Condition" >
+    insert into l_condition (id, minTitle, videoPath, 
+      details, title)
+    values (#{id,jdbcType=INTEGER}, #{mintitle,jdbcType=VARCHAR}, #{videopath,jdbcType=VARCHAR}, 
+      #{details,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jk.bean.Condition" >
+    insert into l_condition
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="minTitle != null" >
+        minTitle,
+      </if>
+      <if test="videoPath != null" >
+        videoPath,
+      </if>
+      <if test="details != null" >
+        details,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="minTitle != null" >
+        #{minTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="videoPath != null" >
+        #{videoPath,jdbcType=VARCHAR},
+      </if>
+      <if test="details != null" >
+        #{details,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jk.bean.Condition" >
+    update l_condition
+    <set >
+      <if test="minTitle != null" >
+        minTitle = #{minTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="videoPath != null" >
+        videoPath = #{videoPath,jdbcType=VARCHAR},
+      </if>
+      <if test="details != null" >
+        details = #{details,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jk.bean.Condition" >
+    update l_condition
+    set minTitle = #{mintitle,jdbcType=VARCHAR},
+      videoPath = #{videopath,jdbcType=VARCHAR},
+      details = #{details,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

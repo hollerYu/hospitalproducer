@@ -10,8 +10,8 @@
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
         新增
     </button>
-    <button  class="btn btn-primary"  onclick="getUpOrDown(1)"> 开启定时器</button>
-    <button  class="btn btn-primary"  onclick="getUpOrDown(2)"> 关闭定时器</button>
+    <button class="btn btn-primary" onclick="getUpOrDown(1)"> 开启定时器</button>
+    <button class="btn btn-primary" onclick="getUpOrDown(2)"> 关闭定时器</button>
 </div>
 <br>
 <!-- 模态框 -->
@@ -211,6 +211,14 @@
                             return '<button onclick="deleteItem(' + row.id + ',\'' + row.name + '\')" class="btn btn-error" >删除</button><button onclick="updateStatus2(' + row.id + ')" class="btn btn-error" >下架</button>';
                         }
                     }
+                },
+                {
+                    field: '77', title: '瓜皮操作', formatter: function (value, row, index) {
+                        return '<input type="button" value="置顶" onclick="getTop(' + row.id + ',' + row.rank + ')" class="btn btn-primary"/>\n' +
+                            '            <input type="button" value="上移" onclick="getUp(' + row.id + ',' + row.rank + ')" class="btn btn-primary"/>\n' +
+                            '            <input type="button" value="下移" onclick="getDown(' + row.id + ',' + row.rank + ')" class="btn btn-primary"/>\n' +
+                            '            <input type="button" value="置底" onclick="getBottom(' + row.id + ',' + row.rank + ')" class="btn btn-primary"/>';
+                    }
                 }
             ],
             onLoadSuccess: function () {  //加载成功时执行
@@ -220,6 +228,71 @@
                 console.info("加载数据失败");
             }
         });
+    }
+
+    function getUp(id,rank) {
+        $.ajax({
+            url: '/specialist/getUp',
+            type: 'post',
+            data: {id:id,rank: rank},
+            dataType: 'json',
+            success: function (data) {
+                if (data == 1) {
+                    layer.msg('上移成功!');
+                    $('#myTable').bootstrapTable('refresh');
+                }else if(data == 0){
+                    layer.msg('已到顶!');
+                }
+            }
+        })
+    }
+    function getDown(id,rank) {
+        $.ajax({
+            url: '/specialist/getDown',
+            type: 'post',
+            data: {id:id,rank: rank},
+            dataType: 'json',
+            success: function (data) {
+                if (data == 1) {
+                    layer.msg('下移成功!');
+                    $('#myTable').bootstrapTable('refresh');
+                }else if(data == 0){
+                    layer.msg('已到底!');
+                }
+            }
+        })
+    }
+    function getBottom(id,rank){
+        $.ajax({
+            url: '/specialist/getBottom',
+            type: 'post',
+            data: {id:id,rank: rank},
+            dataType: 'json',
+            success: function (data) {
+                if (data == 1) {
+                    layer.msg('置底成功!');
+                    $('#myTable').bootstrapTable('refresh');
+                }else if(data == 0){
+                    layer.msg('已是最底!');
+                }
+            }
+        })
+    }
+    function getTop(id,rank){
+        $.ajax({
+            url: '/specialist/getTop',
+            type: 'post',
+            data: {id:id,rank: rank},
+            dataType: 'json',
+            success: function (data) {
+                if (data == 1) {
+                    layer.msg('置顶成功!');
+                    $('#myTable').bootstrapTable('refresh');
+                }else if(data == 0){
+                    layer.msg('已是最顶!');
+                }
+            }
+        })
     }
 
     function deleteItem(id, name) {
@@ -253,7 +326,7 @@
                     $('body').on('hidden.bs.modal', '.modal', function () {
                         $(this).removeData('bs.modal');
                     });
-                    layer.msg('上传成功!');
+                    layer.msg('新增成功!');
                     window.location.reload();
                 }
             },
@@ -310,10 +383,12 @@
             error: function (e) {
                 alert("网络连接失败，请您稍后再试！");
             }
-        });onclick="(1)"
+        });
+        onclick = "(1)"
     }
+
     function getUpOrDown(sum) {
-        if (sum ==1){
+        if (sum == 1) {
             $.ajax({
                 url: "/quartz/task/startCron2",
                 async: true,
@@ -328,7 +403,7 @@
                     alert("网络连接失败，请您稍后再试！");
                 }
             });
-        } else{
+        } else {
             $.ajax({
                 url: "/quartz/task/stopCron2",
                 async: true,
