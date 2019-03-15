@@ -1,14 +1,29 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <title>Title</title>
+    <!-- uploadify上传文件插件 -->
+    <link rel="stylesheet" href="/jscn/uploadify/uploadify.css" type="text/css"/>
+    <!-- 引入EasyUI的样式文件-->
+    <link rel="stylesheet" href="/jscn/easyui/themes/default/easyui.css" type="text/css"/>
+    <!-- 引入EasyUI的图标样式文件-->
+    <link rel="stylesheet"href="/jscn/easyui/themes/icon.css" type="text/css"/>
+    <!-- 引入JQuery -->
+    <script charset="utf-8" src="/jscn/uploadify/jquery.uploadify.min.js"></script>
+    <script src="/jscn/easyui/jquery.min.js"></script>
+    <!-- 引入EasyUI -->
+    <script src="/jscn/easyui/jquery.easyui.min.js"></script>
+    <!-- 引入EasyUI的中文国际化js，让EasyUI支持中文 -->
+    <script src="/jscn/easyui/locale/easyui-lang-zh_CN.js"></script>
     <script th:src="@{~/common/myJs.jsp}"></script>
 </head>
 <body>
 
 <div id="toolbar">
     <input type='button' class="btn btn-primary" data-toggle="modal" data-target="#myModal" value='新增'>
+    <input type='button' onclick="exportSpecialist()" class="btn btn-primary" value='导出'>
+    <input type='button' class="btn btn-primary" data-toggle="modal" data-target="#importdiv" value='导入'>
     <button id="btn_delete" onclick="btn_deleteInfo()" type="button" class="btn btn-default">
         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
     </button>
@@ -66,6 +81,26 @@
     </div>
 
 </div>
+<div class="modal fade" id="importdiv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="form_poi">
+                <!--poi导入 载体-->
+                选择需要导入的文件: <input name="file" class="easyui-filebox" style="width:300px" buttonText="选择文件"><br>
+                <!-- 导入文件模板:<a href="javascript:void(0)" class="easyui-linkbutton" onClick="openStyleDialog()"
+                           data-options="iconCls:'icon-tip'">点击查看</a>-->
+            </form>
+            <!-- 模态框底部 -->
+            <div class="modal-footer">
+                <button type="button" onclick="importq()" class="btn btn-primary">导入</button>
+                <button type="button" class="btn btn-secondary" onclick="closed()" data-dismiss="modal">关闭</button>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
 </body>
 <script type="text/javascript">
     $(function(){
@@ -142,6 +177,38 @@
        }
      })
     }
+
+    //poi导出
+    function exportSpecialist(){
+        location.href="/exportSpecialist";
+    }
+    //poi导入
+    function importq(){
+
+        var formData = new FormData($("#form_poi")[0]);
+
+        $.ajax({
+            url:"/importExcel",
+            type:"post",
+            data:formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+
+            success:function(result){
+                if(result==1){
+                   alert('导入成功');
+                }if(result==0){
+                   alert('格式错误!!!');
+                }
+                initDategrid();
+            },
+            error:function(){
+                alert("导入失败");
+            }
+        })
+    }
+
 
     //批量删除
     function btn_deleteInfo(){
