@@ -24,6 +24,7 @@ public class SpecialistTwoController {
     private MongoTemplate mongoTemplate;
     @Autowired
     private ServletContext context;
+
     //跳转到专家页面
     @RequestMapping("zhuanjia")
     public String zhuanjia() {
@@ -45,38 +46,43 @@ public class SpecialistTwoController {
         json.put("total", count);
         return json;
     }
+
     //新增
     @ResponseBody
     @RequestMapping("addForm")
-    public String addForm(SpecialistTwo specialistTwo){
+    public String addForm(SpecialistTwo specialistTwo) {
         specialistTwo.setPortion("2");
         mongoTemplate.insert(specialistTwo);
-      return "success";
-    }
-    @ResponseBody
-    @RequestMapping("deleteInfotwo")
-    public String yydelete(String[] ids){
-        SpecialistTwo specialistTwo = new SpecialistTwo();
-        Query query = new Query();
-        mongoTemplate.remove(query.addCriteria(Criteria.where("id").in(ids)),specialistTwo.getClass());
         return "success";
     }
+
+    @ResponseBody
+    @RequestMapping("deleteInfotwo")
+    public String yydelete(String[] ids) {
+        SpecialistTwo specialistTwo = new SpecialistTwo();
+        Query query = new Query();
+        mongoTemplate.remove(query.addCriteria(Criteria.where("id").in(ids)), specialistTwo.getClass());
+        return "success";
+    }
+
     //poi导出
     @RequestMapping("exportSpecialist")
     public void importpoi(HttpServletResponse response) {
         Query query = new Query();
         List<SpecialistTwo> list = mongoTemplate.find(query, SpecialistTwo.class);
         //使用poi将导出
-        String title="专家列表";
-        String[] rowName = {"专家姓名","毕业学院","教师图片","专家分类"};
+        String title = "专家列表";
+        String[] rowName = {"id","name", "address", "dataimg", "fenlei","portion"};
         List<Object[]> dataList = new ArrayList<Object[]>();
         Object[] obj = null;
         for (SpecialistTwo task : list) {
             obj = new Object[rowName.length];
-            obj[0] = task.getName();
-            obj[1] = task.getAddress();
-            obj[2] = task.getDataimg();
-            obj[3] = task.getFenlei();
+            obj[0] = task.getId();
+            obj[1] = task.getName();
+            obj[2] = task.getAddress();
+            obj[3] = task.getDataimg();
+            obj[4] = task.getFenlei();
+            obj[5] = task.getPortion();
             dataList.add(obj);
         }
         ExportExcel exportExcel = new ExportExcel(title, rowName, dataList, response);
@@ -86,20 +92,20 @@ public class SpecialistTwoController {
             e.printStackTrace();
         }
     }
-    //poi导入
+
     @ResponseBody
     @RequestMapping("importExcel")
-    public String importExcel(MultipartFile file) throws Exception{
+    public String importExcel(MultipartFile file) throws Exception {
         String filePath = file.getOriginalFilename();
         // System.out.println(filePath);
         String path = filePath.substring(filePath.lastIndexOf("."));
         if (path.equals(".xls")) {
-            int startRow = 2;//从表格的哪一行开始读取
+            int startRow = 3;//从表格的哪一行开始读取
             int endRow = 0;
             List<SpecialistTwo> bookList = (List<SpecialistTwo>) ImportExcel.importExcel(file.getInputStream(), startRow, endRow, SpecialistTwo.class);
             for (SpecialistTwo book : bookList) {
-                book.setId(null);
-                mongoTemplate.insert(bookList);
+                book.setId("");
+                mongoTemplate.save(book);
             }
             return "1";//成功
         } else {
