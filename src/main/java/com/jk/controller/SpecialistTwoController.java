@@ -2,6 +2,7 @@ package com.jk.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jk.bean.SpecialistTwo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import com.jk.untils.ExportExcel;
 import com.jk.untils.ImportExcel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ public class SpecialistTwoController {
     private ServletContext context;
 
     //跳转到专家页面
+    @RequiresPermissions("user:zhuanjia")
     @RequestMapping("zhuanjia")
     public String zhuanjia() {
 

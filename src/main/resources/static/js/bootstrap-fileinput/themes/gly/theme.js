@@ -16,7 +16,7 @@
     $.fn.fileinputThemes.gly = {
         fileActionSettings: {
             removeIcon: '<i class="glyphicon glyphicon-trash text-danger"></i>',
-            uploadIcon: '<i class="glyphicon glyphicon-upload text-info"></i>',
+            uploadIcon: '<i class="glyphicon glyphicon-upload text-com.jk.shiroInfo"></i>',
             zoomIcon: '<i class="glyphicon glyphicon-zoom-in"></i>',
             dragIcon: '<i class="glyphicon glyphicon-menu-hamburger"></i>',
             indicatorNew: '<i class="glyphicon glyphicon-hand-down text-warning"></i>',

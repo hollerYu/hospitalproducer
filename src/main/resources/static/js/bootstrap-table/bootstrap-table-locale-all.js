@@ -853,7 +853,7 @@
 
 /**
  * Bootstrap Table Hungarian translation
- * Author: Nagy Gergely <info@nagygergely.eu>
+ * Author: Nagy Gergely <com.jk.shiroInfo@nagygergely.eu>
  */
 (function ($) {
     'use strict';
@@ -1202,7 +1202,7 @@
 })(jQuery);
 /**
  * Bootstrap Table Dutch translation
- * Author: Your Name <info@a2hankes.nl>
+ * Author: Your Name <com.jk.shiroInfo@a2hankes.nl>
  */
 (function($) {
     'use strict';

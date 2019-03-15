@@ -598,7 +598,7 @@ jQuery.extend({
 				}
 			}
 
-		// A special, fast, case for the most common use of each
+		// A special, fast, case for the most com.jk.shiroInfo use of each
 		} else {
 			if ( isObj ) {
 				for ( name in obj ) {
@@ -1463,7 +1463,7 @@ jQuery.support = (function() {
 
 			// Check if div with explicit width and no margin-right incorrectly
 			// gets computed margin-right based on width of container. For more
-			// info see bug #3333
+			// com.jk.shiroInfo see bug #3333
 			// Fails in WebKit before Feb 2011 nightlies
 			// WebKit Bug 13343 - getComputedStyle returns wrong value for margin-right
 			marginDiv = document.createElement("div");
@@ -2160,7 +2160,7 @@ jQuery.fn.extend({
 				ret = elem.value;
 
 				return typeof ret === "string" ?
-					// handle most common string cases
+					// handle most com.jk.shiroInfo string cases
 					ret.replace(rreturn, "") :
 					// handle cases where value is null/undef or number
 					ret == null ? "" : ret;
@@ -3524,7 +3524,7 @@ jQuery.fn.extend({
 		if ( one === 1 ) {
 			origFn = fn;
 			fn = function( event ) {
-				// Can use an empty set, since event contains the info
+				// Can use an empty set, since event contains the com.jk.shiroInfo
 				jQuery().off( event );
 				return origFn.apply( this, arguments );
 			};
@@ -7035,7 +7035,7 @@ jQuery.each([ "height", "width" ], function( i, name ) {
 	jQuery.cssHooks[ name ] = {
 		get: function( elem, computed, extra ) {
 			if ( computed ) {
-				// certain elements can have dimension info if we invisibly show them
+				// certain elements can have dimension com.jk.shiroInfo if we invisibly show them
 				// however, it must have a current display style that would benefit from this
 				if ( elem.offsetWidth === 0 && rdisplayswap.test( curCSS( elem, "display" ) ) ) {
 					return jQuery.swap( elem, cssShow, function() {
@@ -7491,7 +7491,7 @@ jQuery.fn.load = function( url, params, callback ) {
 	return this;
 };
 
-// Attach a bunch of functions for handling common AJAX events
+// Attach a bunch of functions for handling com.jk.shiroInfo AJAX events
 jQuery.each( "ajaxStart ajaxStop ajaxComplete ajaxError ajaxSuccess ajaxSend".split( " " ), function( i, o ){
 	jQuery.fn[ o ] = function( f ){
 		return this.on( o, f );

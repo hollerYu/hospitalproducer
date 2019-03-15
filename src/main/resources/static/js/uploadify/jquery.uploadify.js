@@ -568,7 +568,7 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 			// Load the swfupload settings
 			var settings = this.settings;
 
-			// Reset some queue info
+			// Reset some queue com.jk.shiroInfo
 			this.queueData.errorMsg       = 'Some files were not added to the queue:';
 			this.queueData.filesReplaced  = 0;
 			this.queueData.filesCancelled = 0;

@@ -1,6 +1,6 @@
 /**
  * Bootstrap Table Dutch translation
- * Author: Your Name <info@a2hankes.nl>
+ * Author: Your Name <com.jk.shiroInfo@a2hankes.nl>
  */
 (function($) {
     'use strict';

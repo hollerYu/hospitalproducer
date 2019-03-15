@@ -33,4 +33,6 @@ public class Specialist implements Serializable {
 
     private Integer status;
 
+    private Integer rank;
+
 }

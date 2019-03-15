@@ -13,6 +13,7 @@ package com.jk.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.jk.bean.Quizzesmar;
 import com.jk.service.QuizzesmarService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -42,6 +43,7 @@ public class QuizzesmarController {
     @Resource
     private MongoTemplate mongoTemplate;
 
+    @RequiresPermissions("user:toQuizzesmar")
     @RequestMapping("toQuizzesmar")
     public String toQuizzesmar(){
         return "Quizzesmar";

@@ -1,6 +1,6 @@
 /**
  * <pre>项目名称:weekend_demo 
- * 文件名称:Tree.java 
+ * 文件名称:Permission.java
  * 包名:com.jk.pojo 
  * 创建日期:2018年12月30日下午3:35:29 
  * Copyright (c) 2018, All Rights Reserved.</pre> 
@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 /**
  * <pre>
  * 项目名称：weekend_demo    
- * 类名称：Tree    
+ * 类名称：Permission
  * 类描述：    
  * 创建人：yjm   
  * 创建时间：2018年12月30日 下午3:35:29    
@@ -29,7 +29,7 @@ import lombok.NoArgsConstructor;
  * </pre>
  */
 @Data
-public class Tree implements Serializable{
+public class Permission implements Serializable{
 
 	private Integer id;
 
@@ -42,6 +42,10 @@ public class Tree implements Serializable{
 	private String href;
 
 	private List nodes;
+
+	private String permission; //权限字符串,menu例子：role:*，button例子：role:create,role:update,role:delete,role:view
+
+	private List<Role> roles;
 
 
 }

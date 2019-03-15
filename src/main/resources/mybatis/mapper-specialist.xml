@@ -14,10 +14,11 @@
     <result column="creat_time" property="creatTime" jdbcType="DATE" />
     <result column="details" property="details" jdbcType="LONGVARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="rank" property="rank" jdbcType="INTEGER" />
 
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, position, address, look, medal, img, viewpoint, title, creat_time,details,status
+    id, name, position, address, look, medal, img, viewpoint, title, creat_time,details,status,rank
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -28,7 +29,37 @@
   <select id="getSpecialistAll" resultMap="BaseResultMap"  >
     select
     <include refid="Base_Column_List" />
-    from c_specialist limit #{start},#{end}
+    from c_specialist  order by rank limit #{start},#{end}
+  </select>
+
+  <select id="getIdByRank" resultType="com.jk.bean.Specialist"  resultMap="BaseResultMap" parameterType="integer">
+    select
+    id,rank
+    from c_specialist where rank =
+    (select rank from c_specialist where rank &lt; #{rank} ORDER BY rank desc limit 1)
+  </select>
+
+  <select id="getIdByRank02" resultType="com.jk.bean.Specialist"  resultMap="BaseResultMap" parameterType="integer">
+    select
+    id,rank
+    from c_specialist where rank =
+    (select rank from c_specialist where rank &gt; #{rank} ORDER BY rank limit 1)
+  </select>
+  <select id="getIdByRank03" resultType="com.jk.bean.Specialist"  resultMap="BaseResultMap" parameterType="integer">
+    select
+    id,rank
+    from c_specialist where rank =
+    (select max(rank) from c_specialist)
+  </select>
+  <select id="getIdByRank04" resultType="com.jk.bean.Specialist"  resultMap="BaseResultMap" parameterType="integer">
+    select
+    id,rank
+    from c_specialist where rank =
+    (select min(rank) from c_specialist)
+  </select>
+
+  <select id="getMaxRank" resultType="integer">
+    select max(rank) rank from c_specialist
   </select>
 
   <update id="updateStatus" parameterType="integer">
@@ -36,6 +67,10 @@
   </update>
   <update id="updateStatusDown" parameterType="integer">
     update c_specialist set status = 0 where id = #{id}
+  </update>
+
+  <update id="updateRankById" parameterType="integer">
+    update c_specialist set rank = #{rank} where id = #{rankId}
   </update>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from c_specialist
@@ -87,6 +122,9 @@
       <if test="details != null" >
         details,
       </if>
+      <if test="rank != null" >
+        rank,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -121,6 +159,9 @@
       </if>
       <if test="details != null" >
         #{details,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="rank != null" >
+        #{rank,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>

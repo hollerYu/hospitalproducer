@@ -7950,7 +7950,7 @@ function parseRichText(text, style) {
         truncateHeight != null && (truncateHeight -= stlPadding[0] + stlPadding[2]);
     }
 
-    // Calculate layout info of tokens.
+    // Calculate layout com.jk.shiroInfo of tokens.
     for (var i = 0; i < lines.length; i++) {
         var line = lines[i];
         var lineHeight = 0;
@@ -9420,7 +9420,7 @@ var Painter = function (root, storage, opts) {
         // mainLayer.resize(width, height);
         layers[CANVAS_ZLEVEL] = mainLayer;
         mainLayer.zlevel = CANVAS_ZLEVEL;
-        // Not use common zlevel.
+        // Not use com.jk.shiroInfo zlevel.
         zlevelList.push(CANVAS_ZLEVEL);
 
         this._domRoot = root;
@@ -11954,7 +11954,7 @@ function enableClassCheck(Clz) {
     };
 }
 
-// superCall should have class info, which can not be fetch from 'this'.
+// superCall should have class com.jk.shiroInfo, which can not be fetch from 'this'.
 // Consider this case:
 // class A has method f,
 // class B inherits class A, overrides method f, f call superApply('f'),
@@ -16993,7 +16993,7 @@ function setAsHoverStyleTrigger(el, opt) {
 }
 
 /**
- * See more info in `setTextStyleCommon`.
+ * See more com.jk.shiroInfo in `setTextStyleCommon`.
  * @param {Object|module:zrender/graphic/Style} normalStyle
  * @param {Object} emphasisStyle
  * @param {module:echarts/model/Model} normalModel
@@ -17066,7 +17066,7 @@ function setLabelStyle(
 
 /**
  * Set basic textStyle properties.
- * See more info in `setTextStyleCommon`.
+ * See more com.jk.shiroInfo in `setTextStyleCommon`.
  * @param {Object|module:zrender/graphic/Style} textStyle
  * @param {module:echarts/model/Model} model
  * @param {Object} [specifiedTextStyle] Can be overrided by settings in model.
@@ -17085,7 +17085,7 @@ function setTextStyle(
 
 /**
  * Set text option in the style.
- * See more info in `setTextStyleCommon`.
+ * See more com.jk.shiroInfo in `setTextStyleCommon`.
  * @deprecated
  * @param {Object} textStyle
  * @param {module:echarts/model/Model} labelModel
@@ -19213,7 +19213,7 @@ function getAvailableSize(positionInfo, containerRect, margin) {
 }
 
 /**
- * Parse position info.
+ * Parse position com.jk.shiroInfo.
  *
  * @param {Object} positionInfo
  * @param {number|string} [positionInfo.left]
@@ -20893,7 +20893,7 @@ function doGuessOrdinal(
  * (2) In `merge option` mode, if a component has no id/name specified, it
  * will be merged by index, and the result sequence of the components is
  * consistent to the original sequence.
- * (3) `reset` feature (in toolbox). Find detailed info in comments about
+ * (3) `reset` feature (in toolbox). Find detailed com.jk.shiroInfo in comments about
  * `mergeOption` in module:echarts/model/OptionManager.
  */
 
@@ -21105,7 +21105,7 @@ var GlobalModel = Model.extend({
     },
 
     /**
-     * Get option for output (cloned option and inner info removed)
+     * Get option for output (cloned option and inner com.jk.shiroInfo removed)
      * @public
      * @return {Object}
      */
@@ -25518,7 +25518,7 @@ function createOverallStageTask(scheduler, stageHandler, stageHandlerRecord, ecM
     // Otherwise, (usually it is legancy case), the overall task will only be
     // executed when upstream dirty. Otherwise the progressive rendering of all
     // pipelines will be disabled unexpectedly. But it still needs stubs to receive
-    // dirty info from upsteam.
+    // dirty com.jk.shiroInfo from upsteam.
     else {
         overallProgress = false;
         each$1(ecModel.getSeries(), createStub);
@@ -26062,7 +26062,7 @@ SVGParser.prototype.parse = function (xml, opt) {
             // but not intend to transform the output group. So we keep the output
             // group no transform. If the user intend to use the viewBox as a
             // camera, just set `opt.ignoreViewBox` as `true` and set transfrom
-            // manually according to the viewBox info in the output of this method.
+            // manually according to the viewBox com.jk.shiroInfo in the output of this method.
             var elRoot = root;
             root = new Group();
             root.add(elRoot);
@@ -26660,7 +26660,7 @@ function parseSVG(xml, opt) {
 
 var storage = createHashMap();
 
-// For minimize the code size of common echarts package,
+// For minimize the code size of com.jk.shiroInfo echarts package,
 // do not put too much logic in this module.
 
 var mapDataStorage = {
@@ -27516,9 +27516,9 @@ var updateMethods = {
         // deteming whether use progressive rendering.
         updateStreamModes(this, ecModel);
 
-        // We update stream modes before coordinate system updated, then the modes info
+        // We update stream modes before coordinate system updated, then the modes com.jk.shiroInfo
         // can be fetched when coord sys updating (consider the barGrid extent fix). But
-        // the drawback is the full coord info can not be fetched. Fortunately this full
+        // the drawback is the full coord com.jk.shiroInfo can not be fetched. Fortunately this full
         // coord is not requied in stream mode updater currently.
         coordSysMgr.update(ecModel, api);
 
@@ -28451,7 +28451,7 @@ function createExtensionAPI(ecInstance) {
  * same as there is no such prop in the `query` object.
  */
 function EventProcessor() {
-    // These info required: targetEl, packedEvent, model, view
+    // These com.jk.shiroInfo required: targetEl, packedEvent, model, view
     this.eventInfo;
 }
 EventProcessor.prototype = {
@@ -28870,7 +28870,7 @@ function getCoordinateSystemDimensions(type) {
 
 /**
  * Layout is a special stage of visual encoding
- * Most visual encoding like color are common for different chart
+ * Most visual encoding like color are com.jk.shiroInfo for different chart
  * But each chart has it's own layout algorithm
  *
  * @param {number} [priority=1000]
@@ -29335,7 +29335,7 @@ function getDimensionTypeByAxis(axisType) {
 
 function mayLabelDimType(dimType) {
     // In most cases, ordinal and time do not suitable for label.
-    // Ordinal info can be displayed on axis. Time is too long.
+    // Ordinal com.jk.shiroInfo can be displayed on axis. Time is too long.
     return !(dimType === 'ordinal' || dimType === 'time');
 }
 
@@ -29633,7 +29633,7 @@ var List = function (dimensions, hostModel) {
     this._approximateExtent = {};
 
     /**
-     * Cache summary info for fast visit. See "dimensionHelper".
+     * Cache summary com.jk.shiroInfo for fast visit. See "dimensionHelper".
      * @type {Object}
      * @private
      */
@@ -29677,7 +29677,7 @@ listProto.getDimension = function (dim) {
 };
 
 /**
- * Get type and calculation info of particular dimension
+ * Get type and calculation com.jk.shiroInfo of particular dimension
  * @param {string|number} dim
  *        Dimension can be concrete names like x, y, z, lng, lat, angle, radius
  *        Or a ordinal number. For example getDimensionInfo(0) will return 'x' or 'lng' or 'radius'
@@ -29946,7 +29946,7 @@ listProto._initDataFromProvider = function (start, end) {
 
             if (dataItem && name == null) {
                 // If dataItem is {name: ...}, it has highest priority.
-                // That is appropriate for many common cases.
+                // That is appropriate for many com.jk.shiroInfo cases.
                 if (dataItem.name != null) {
                     // There is no other place to persistent dataItem.name,
                     // so save it to nameList.
@@ -30761,7 +30761,7 @@ listProto.selectRange = function (range) {
 
     var quickFinished = false;
     if (!this._indices) {
-        // Extreme optimization for common case. About 2x faster in chrome.
+        // Extreme optimization for com.jk.shiroInfo case. About 2x faster in chrome.
         var idx = 0;
         if (dimSize === 1) {
             var dimStorage = this._storage[dimensions[0]];
@@ -32195,7 +32195,7 @@ proto$1.parseAndCollect = function (category) {
 
     // The value of category dim can be the index of the given category set.
     // This feature is only supported when !needCollect, because we should
-    // consider a common case: a value is 2017, which is a number but is
+    // consider a com.jk.shiroInfo case: a value is 2017, which is a number but is
     // expected to be tread as a category. This case usually happen in dataset,
     // where it happent to be no need of the index feature.
     if (typeof category !== 'string' && !needCollect) {
@@ -32823,7 +32823,7 @@ function makeColumnLayout(barSeries) {
 }
 
 function doCalBarWidthAndOffset(seriesInfoList) {
-    // Columns info on each category axis. Key is cartesian name
+    // Columns com.jk.shiroInfo on each category axis. Key is cartesian name
     var columnsMap = {};
 
     each$1(seriesInfoList, function (seriesInfo, idx) {
@@ -33169,7 +33169,7 @@ function getValueAxisStart(baseAxis, valueAxis, stacked) {
 // In most cases, `number.parseDate` will treat input data string as local time
 // (except time zone is specified in time string). And `format.formateTime` returns
 // local time by default. option.useUTC is false by default. This design have
-// concidered these common case:
+// concidered these com.jk.shiroInfo case:
 // (1) Time that is persistent in server is in UTC, but it is needed to be diplayed
 // in local time by default.
 // (2) By default, the input data string (e.g., '2011-01-02') should be displayed
@@ -33613,7 +33613,7 @@ function getScaleExtent(scale, model) {
     }
 
     // Notice: When min/max is not set (that is, when there are null/undefined,
-    // which is the most common case), these cases should be ensured:
+    // which is the most com.jk.shiroInfo case), these cases should be ensured:
     // (1) For 'ordinal', show all axis.data.
     // (2) For others:
     //      + `boundaryGap` is applied (if min/max set, boundaryGap is
@@ -34470,7 +34470,7 @@ function createScale(dataExtent, option) {
 }
 
 /**
- * Mixin common methods to axis model,
+ * Mixin com.jk.shiroInfo methods to axis model,
  *
  * Inlcude methods
  * `getFormattedLabels() => Array.<string>`
@@ -35952,7 +35952,7 @@ symbolProto.updateData = function (data, idx, seriesScope) {
     this._seriesModel = seriesModel;
 };
 
-// Update common properties
+// Update com.jk.shiroInfo properties
 var normalStyleAccessPath = ['itemStyle'];
 var emphasisStyleAccessPath = ['emphasis', 'itemStyle'];
 var normalLabelAccessPath = ['label'];
@@ -39372,7 +39372,7 @@ gridProto._initCartesian = function (gridModel, ecModel, api) {
             // Inject axisModel into axis
             axis.model = axisModel;
 
-            // Inject grid info axis
+            // Inject grid com.jk.shiroInfo axis
             axis.grid = this;
 
             // Index of axis, can be used as key
@@ -40342,7 +40342,7 @@ function collectAxesInfo(result, ecModel, api) {
     var linksOption = globalAxisPointerModel.get('link', true) || [];
     var linkGroups = [];
 
-    // Collect axes info.
+    // Collect axes com.jk.shiroInfo.
     each$6(api.getCoordinateSystems(), function (coordSys) {
         // Some coordinate system do not support axes, like geo.
         if (!coordSys.axisPointerEnabled) {
@@ -42277,7 +42277,7 @@ piePieceProto.updateData = function (data, idx, firstCreate) {
         }, seriesModel, idx);
     }
 
-    // Update common style
+    // Update com.jk.shiroInfo style
     var visualColor = data.getItemVisual(idx, 'color');
 
     sector.useStyle(
@@ -42656,7 +42656,7 @@ var dataColor = function (seriesType) {
                             dataAll.getName(rawIdx) || (rawIdx + ''), seriesModel.__paletteScope,
                             dataAll.count()
                         );
-                    // Legend may use the visual info in data before processed
+                    // Legend may use the visual com.jk.shiroInfo in data before processed
                     dataAll.setItemVisual(rawIdx, 'color', color);
 
                     // Data is not filtered
@@ -48776,7 +48776,7 @@ function separation(cb) {
 }
 
 /**
- * Transform the common coordinate to radial coordinate
+ * Transform the com.jk.shiroInfo coordinate to radial coordinate
  * @param  {number} x
  * @param  {number} y
  * @return {Object}
@@ -48826,7 +48826,7 @@ function executeShifts(node) {
 /**
  * The core of the algorithm. Here, a new subtree is combined with the
  * previous subtrees. Threads are used to traverse the inside and outside
- * contours of the left and right subtree up to the highest common level.
+ * contours of the left and right subtree up to the highest com.jk.shiroInfo level.
  * Whenever two nodes of the inside contours conflict, we compute the left
  * one of the greatest uncommon ancestors using the function nextAncestor()
  * and call moveSubtree() to shift the subtree and prepare the shifts of
@@ -51039,10 +51039,10 @@ extendChartView({
      * @public
      * @param {number} x Global coord x.
      * @param {number} y Global coord y.
-     * @return {Object} info If not found, return undefined;
-     * @return {number} info.node Target node.
-     * @return {number} info.offsetX x refer to target node.
-     * @return {number} info.offsetY y refer to target node.
+     * @return {Object} com.jk.shiroInfo If not found, return undefined;
+     * @return {number} com.jk.shiroInfo.node Target node.
+     * @return {number} com.jk.shiroInfo.offsetX x refer to target node.
+     * @return {number} com.jk.shiroInfo.offsetY y refer to target node.
      */
     findTarget: function (x, y) {
         var targetInfo;
@@ -52353,7 +52353,7 @@ var treemapLayout = {
             ecHeight
         );
 
-        // Fetch payload info.
+        // Fetch payload com.jk.shiroInfo.
         var payloadType = payload && payload.type;
         var types = ['treemapZoomToNode', 'treemapRootToNode'];
         var targetInfo = retrieveTargetInfo(payload, types, seriesModel);
@@ -55873,7 +55873,7 @@ var createView = function (ecModel, api) {
                 viewRect.x, viewRect.y, viewWidth, viewHeight
             );
 
-            // Update roam info
+            // Update roam com.jk.shiroInfo
             viewCoordSys.setCenter(seriesModel.get('center'));
             viewCoordSys.setZoom(seriesModel.get('zoom'));
 
@@ -56748,7 +56748,7 @@ funnelPieceProto.updateData = function (data, idx, firstCreate) {
         }, seriesModel, idx);
     }
 
-    // Update common style
+    // Update com.jk.shiroInfo style
     var itemStyleModel = itemModel.getModel('itemStyle');
     var visualColor = data.getItemVisual(idx, 'color');
 
@@ -58538,7 +58538,7 @@ BrushController.prototype = {
      *            {id: 'yy', brushType: 'rect', range: [[23, 44], [23, 54]]},
      *            ...
      *        ]
-     *        `brushType` is required in each cover info. (can not be 'auto')
+     *        `brushType` is required in each cover com.jk.shiroInfo. (can not be 'auto')
      *        `id` is not mandatory.
      *        `brushStyle`, `transformable` is not mandatory, use DEFAULT_BRUSH_OPT by default.
      *        If brushOptionList is null/undefined, all covers removed.
@@ -58719,7 +58719,7 @@ function getPanelByCover(controller, cover) {
         return true; // Global panel
     }
     var panelId = cover.__brushOption.panelId;
-    // User may give cover without coord sys info,
+    // User may give cover without coord sys com.jk.shiroInfo,
     // which is then treated as global panel.
     return panelId != null ? panels[panelId] : true;
 }
@@ -61705,7 +61705,7 @@ mixin(BoxplotSeries, seriesModelMixin, true);
 * under the License.
 */
 
-// Update common properties
+// Update com.jk.shiroInfo properties
 var NORMAL_ITEM_STYLE_PATH = ['itemStyle'];
 var EMPHASIS_ITEM_STYLE_PATH = ['emphasis', 'itemStyle'];
 
@@ -65389,7 +65389,7 @@ var BarView$1 = extendChartView({
 });
 
 
-// Set or calculate default value about symbol, and calculate layout info.
+// Set or calculate default value about symbol, and calculate layout com.jk.shiroInfo.
 function getSymbolMeta(data, dataIndex, itemModel, opt) {
     var layout = data.getItemLayout(dataIndex);
     var symbolRepeat = itemModel.get('symbolRepeat');
@@ -67200,7 +67200,7 @@ function updateModelActually(showValueMap, axesInfo, outputFinder) {
             !axisInfo.useHandle && (option.status = 'hide');
         }
 
-        // If status is 'hide', should be no info in payload.
+        // If status is 'hide', should be no com.jk.shiroInfo in payload.
         option.status === 'show' && outputAxesInfo.push({
             axisDim: axisInfo.axis.dim,
             axisIndex: axisInfo.axis.model.componentIndex,
@@ -67382,7 +67382,7 @@ var AxisPointerModel = extendComponentModel({
             borderWidth: 0,
             shadowBlur: 3,
             shadowColor: '#aaa'
-            // Considering applicability, common style should
+            // Considering applicability, com.jk.shiroInfo style should
             // better not have shadowOffset.
             // shadowOffsetX: 0,
             // shadowOffsetY: 2
@@ -71187,7 +71187,7 @@ function updateEl(el, dataIndex, elOption, animatableModel, data, isInit, isRoot
     elOption.hasOwnProperty('silent') && el.attr('silent', elOption.silent);
     elOption.hasOwnProperty('invisible') && el.attr('invisible', elOption.invisible);
     elOption.hasOwnProperty('ignore') && el.attr('ignore', elOption.ignore);
-    // `elOption.info` enables user to mount some info on
+    // `elOption.com.jk.shiroInfo` enables user to mount some com.jk.shiroInfo on
     // elements and use them in event handlers.
     // Update them only when user specified, otherwise, remain.
     elOption.hasOwnProperty('info') && el.attr('info', elOption.info);
@@ -71695,7 +71695,7 @@ var GraphicModel = extendComponentModel({
         //          This mode is similar to css behavior, which is useful when you
         //          want an element to be able to overflow its container. (Consider
         //          a rotated circle needs to be located in a corner.)
-        // info: custom info. enables user to mount some info on elements and use them
+        // com.jk.shiroInfo: custom com.jk.shiroInfo. enables user to mount some com.jk.shiroInfo on elements and use them
         //      in event handlers. Update them only when user specified, otherwise, remain.
 
         // Note: elements is always behind its ancestors in this elements array.
@@ -72152,7 +72152,7 @@ function setEventData(el, graphicModel, elOption) {
         };
     }
 
-    // `elOption.info` enables user to mount some info on
+    // `elOption.com.jk.shiroInfo` enables user to mount some com.jk.shiroInfo on
     // elements and use them in event handlers.
     if (eventData) {
         eventData.info = el.info;
@@ -75299,7 +75299,7 @@ function barLayoutPolar(seriesType, ecModel, api) {
  * Calculate bar width and offset for radial bar charts
  */
 function calRadialBar(barSeries, api) {
-    // Columns info on each category axis. Key is polar name
+    // Columns com.jk.shiroInfo on each category axis. Key is polar name
     var columnsMap = {};
 
     each$1(barSeries, function (seriesModel, idx) {
@@ -76064,7 +76064,7 @@ function updatePolarScale(ecModel, api) {
 }
 
 /**
- * Set common axis properties
+ * Set com.jk.shiroInfo axis properties
  * @param {module:echarts/coord/polar/AngleAxis|module:echarts/coord/polar/RadiusAxis}
  * @param {module:echarts/coord/polar/AxisModel}
  * @inner
@@ -78402,7 +78402,7 @@ var BrushModel = extendComponentModel({
 
         // If ranges is null/undefined, range state remain.
         // This helps user to dispatchAction({type: 'brush'}) with no areas
-        // set but just want to get the current brush select info from a `brush` event.
+        // set but just want to get the current brush select com.jk.shiroInfo from a `brush` event.
         if (!areas) {
             return;
         }
@@ -78895,7 +78895,7 @@ Calendar.prototype = {
     },
 
     /**
-     * get date info
+     * get date com.jk.shiroInfo
      *
      * @param  {string|number} date date
      * @return {Object}
@@ -79159,7 +79159,7 @@ Calendar.prototype = {
     },
 
     /**
-     * range info
+     * range com.jk.shiroInfo
      *
      * @private
      * @param  {Array} range range ['2017-01-01', '2017-07-08']
@@ -79508,7 +79508,7 @@ extendComponentView({
 
         var coordSys = calendarModel.coordinateSystem;
 
-        // range info
+        // range com.jk.shiroInfo
         var rangeData = coordSys.getRangeInfo();
         var orient = coordSys.getOrient();
 
@@ -81717,7 +81717,7 @@ var SliderZoomView = DataZoomView.extend({
 
         // Notice: this._resetInterval() should not be executed when payload.type
         // is 'dataZoom', origin this._range should be maintained, otherwise 'pan'
-        // or 'zoom' info will be missed because of 'throttle' of this.dispatchAction,
+        // or 'zoom' com.jk.shiroInfo will be missed because of 'throttle' of this.dispatchAction,
         if (!payload || payload.type !== 'dataZoom' || payload.from !== this.uid) {
             this._buildView();
         }
@@ -82694,7 +82694,7 @@ var InsideZoomView = DataZoomView.extend({
     init: function (ecModel, api) {
         /**
          * 'throttle' is used in this.dispatchAction, so we save range
-         * to avoid missing some 'pan' info.
+         * to avoid missing some 'pan' com.jk.shiroInfo.
          * @private
          * @type {Array.<number>}
          */
@@ -90541,7 +90541,7 @@ registerPreprocessor(function (option) {
         if (toolboxOpt && toolboxOpt.feature) {
             var dataZoomOpt = toolboxOpt.feature.dataZoom;
             // FIXME: If add dataZoom when setOption in merge mode,
-            // no axis info to be added. See `test/dataZoom-extreme.html`
+            // no axis com.jk.shiroInfo to be added. See `test/dataZoom-extreme.html`
             addForAxis('xAxis', dataZoomOpt);
             addForAxis('yAxis', dataZoomOpt);
         }
@@ -91600,7 +91600,7 @@ if (!env$1.canvasSupported) {
         y += textRect.height / 2;
 
         // var fontSize = fontStyle.size;
-        // 1.75 is an arbitrary number, as there is no info about the text baseline
+        // 1.75 is an arbitrary number, as there is no com.jk.shiroInfo about the text baseline
         // switch (baseline) {
             // case 'hanging':
             // case 'top':

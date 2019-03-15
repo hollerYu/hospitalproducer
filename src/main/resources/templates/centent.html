@@ -46,7 +46,6 @@
     $(function () {
 
         initDategrid();
-
     })
 
     var id = null;
@@ -130,15 +129,15 @@
                         if (row.state == 1) { //状态为 1  通过
                             butt += "<input type='button'class='btn btn-danger' value='审核不通过' onclick='changeState(2," + row.id + ")'>  ";
                             if(row.replyState==1) {    //已回复
-                                butt += "<input type='button' class='btn btn-info' disabled value='回复' onclick='openModal(" + row.id + "," + row.userId + ",\"" + row.yhMch + "\")'> ";
+                                butt += "<input type='button' class='btn btn-com.jk.shiroInfo' disabled value='回复' onclick='openModal(" + row.id + "," + row.userId + ",\"" + row.yhMch + "\")'> ";
                             }else{
-                                butt += "<input type='button' class='btn btn-info' value='回复' onclick='openModal(" + row.id + "," + row.userId + ",\"" + row.yhMch + "\")'> ";
+                                butt += "<input type='button' class='btn btn-com.jk.shiroInfo' value='回复' onclick='openModal(" + row.id + "," + row.userId + ",\"" + row.yhMch + "\")'> ";
                             }
                          }
                         if (row.state == 2) { //状态为 2  不通过
                             butt += "<input type='button'class='btn btn-success' value='审核通过' onclick='changeState(1," + row.id + ")'>  ";
                         }
-                        //butt +="<button type='button' data-toggle='modal' class='btn btn-info' data-target='#myModal'> 回复 </button>";
+                        //butt +="<button type='button' data-toggle='modal' class='btn btn-com.jk.shiroInfo' data-target='#myModal'> 回复 </button>";
                         return butt;
                     },
                 },
