@@ -13,6 +13,7 @@ package com.jk.bean;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 〈一句话功能简述〉<br> 
@@ -23,7 +24,7 @@ import java.io.Serializable;
  * @since 1.0.0
  */
 @Data
-public class User implements Serializable {
+public class User implements Serializable{
 
     private Integer id;
 
@@ -45,4 +46,8 @@ public class User implements Serializable {
 
     private String rememberPwd;  //记住密码
 
+    //临时字段
+    private String roleName;// 一个用户具有多个角色
+
+    private String permission; //权限字符串,menu例子：role:*，button例子：role:create,role:update,role:delete,role:view
 }

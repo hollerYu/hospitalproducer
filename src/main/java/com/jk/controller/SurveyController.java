@@ -3,6 +3,7 @@ package com.jk.controller;
 import com.jk.bean.QuestSurvey;
 import com.jk.service.SurveyService;
 import com.jk.untils.ReturnPage;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,7 @@ public class SurveyController {
     private SurveyService questSurveyService;
 
     //去问卷调查  页面
+    @RequiresPermissions("user:toSurvey")
     @RequestMapping("toSurvey")
     public String toSurvey(){
         return "survey";

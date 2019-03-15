@@ -5,6 +5,7 @@ import com.jk.untils.ReturnPage;
 import sun.reflect.generics.tree.Tree;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @Auther: yjm
@@ -19,4 +20,16 @@ public interface ContentService {
     ReturnPage selectContent(Integer page, Integer rows);
 
     void changeState(Integer state, Integer id);
+
+    User queryByUserName(String username);
+
+    /**
+     * 根据  用户id 查询 用户  所拥有的权限
+     * @param id
+     * @return
+     */
+    List<String> queryPermissionByUserId(Integer id);
+
+
+
 }

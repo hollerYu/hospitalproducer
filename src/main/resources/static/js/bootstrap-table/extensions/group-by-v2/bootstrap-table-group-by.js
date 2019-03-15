@@ -115,7 +115,7 @@
             tableGroups.forEach(function(item){
                 var html = [];
 
-                html.push(sprintf('<tr class="info groupBy expanded" data-group-index="%s">', item.id));
+                html.push(sprintf('<tr class="com.jk.shiroInfo groupBy expanded" data-group-index="%s">', item.id));
 
                 if (that.options.detailView && !that.options.cardView) {
                     html.push('<td class="detail"></td>');

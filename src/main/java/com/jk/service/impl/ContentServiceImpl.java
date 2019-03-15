@@ -1,6 +1,6 @@
 package com.jk.service.impl;
 
-import com.jk.bean.Tree;
+import com.jk.bean.Permission;
 import com.jk.bean.User;
 import com.jk.mapper.ContentMapper;
 import com.jk.service.ContentService;
@@ -10,6 +10,7 @@ import com.github.pagehelper.PageHelper;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @Auther: yjm
@@ -28,22 +29,22 @@ public class ContentServiceImpl implements ContentService {
     }
 
     public List getTreeData() {
-        List<Tree> treePrant = contentMapper.getTreeData(0);
+        List<Permission> permissionPrant = contentMapper.getTreeData(0);
 
-        getForeachData(treePrant);
+        getForeachData(permissionPrant);
 
-        return treePrant;
+        return permissionPrant;
     }
 
     /**
      * 递归
      */
-    private void getForeachData(List<Tree> treePrant) {
-        for (Tree tree : treePrant) {
-            List<Tree> nodesData=contentMapper.getTreeData(tree.getId());
+    private void getForeachData(List<Permission> permissionPrant) {
+        for (Permission permission : permissionPrant) {
+            List<Permission> nodesData=contentMapper.getTreeData(permission.getId());
 
             if(nodesData.size()>0){
-                tree.setNodes(nodesData);
+                permission.setNodes(nodesData);
                 getForeachData(nodesData);
             }
         }
@@ -64,5 +65,17 @@ public class ContentServiceImpl implements ContentService {
     public void changeState(Integer state, Integer id) {
         contentMapper.changeState(state,id);
     }
+
+    @Override
+    public User queryByUserName(String username) {
+        return contentMapper.queryByUserName(username);
+    }
+
+    @Override
+    public List<String> queryPermissionByUserId(Integer id) {
+        return contentMapper.queryPermissionByUserId(id);
+    }
+
+
 
 }

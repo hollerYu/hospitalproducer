@@ -2,6 +2,7 @@ package com.jk.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jk.bean.Log;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
@@ -18,6 +19,7 @@ public class LogController {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    @RequiresPermissions("user:tolog")
     @RequestMapping("tolog")
     public String tolog(){
         return "log";

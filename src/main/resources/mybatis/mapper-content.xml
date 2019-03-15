@@ -35,5 +35,27 @@
 	   update y_comment yc set yc.state=#{param1} where yc.id=#{param2}
  </update>
 
+	<select id="queryByUserName" resultType="User">
+
+		select id,yh_mch yhMch,yh_mm yhMm from t_mall_user_account where yh_mch= #{username}
+	</select>
+
+	<select id="queryPermissionByUserId" resultType="String">
+
+		SELECT
+			yt.permission
+		FROM
+			yjm_user_role ur,
+			yjm_role yr,
+			yjm_role_permission yrp,
+			y_tree2 yt
+		WHERE
+			ur.role_id = yr.role_id
+		AND yrp.tree_id = yt.id
+		AND ur.user_id = #{id}
+
+	</select>
+
+
 
 </mapper>

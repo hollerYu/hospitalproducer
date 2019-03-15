@@ -4,7 +4,7 @@
  * Copyright (c) 2009-2016 www.jeasyui.com. All rights reserved.
  *
  * Licensed under the freeware license: http://www.jeasyui.com/license_freeware.php
- * To use it on other terms please contact us: info@jeasyui.com
+ * To use it on other terms please contact us: com.jk.shiroInfo@jeasyui.com
  *
  */
 (function($){
@@ -103,7 +103,7 @@ var td=$("<td></td>").appendTo(tr);
 $(_4.buttons).appendTo(td).show();
 }
 }
-$("<div class=\"pagination-info\"></div>").appendTo(_5);
+$("<div class=\"pagination-com.jk.shiroInfo\"></div>").appendTo(_5);
 $("<div style=\"clear:both;\"></div>").appendTo(_5);
 function _9(_c){
 var _d=_4.nav[_c];
@@ -185,7 +185,7 @@ var _1c=_18.displayMsg;
 _1c=_1c.replace(/{from}/,_18.total==0?0:_18.pageSize*(_18.pageNumber-1)+1);
 _1c=_1c.replace(/{to}/,Math.min(_18.pageSize*(_18.pageNumber),_18.total));
 _1c=_1c.replace(/{total}/,_18.total);
-$(_15).find("div.pagination-info").html(_1c);
+$(_15).find("div.pagination-com.jk.shiroInfo").html(_1c);
 if(bb.first){
 bb.first.linkbutton({disabled:((!_18.total)||_18.pageNumber==1)});
 }

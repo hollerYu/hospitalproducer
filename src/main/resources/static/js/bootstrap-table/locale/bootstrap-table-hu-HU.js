@@ -1,6 +1,6 @@
 /**
  * Bootstrap Table Hungarian translation
- * Author: Nagy Gergely <info@nagygergely.eu>
+ * Author: Nagy Gergely <com.jk.shiroInfo@nagygergely.eu>
  */
 (function ($) {
     'use strict';

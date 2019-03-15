@@ -4,6 +4,7 @@ import com.jk.bean.HotPoint;
 import com.jk.bean.Specialist;
 import com.jk.service.HotpointService;
 import com.jk.untils.ResultPage;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,6 +19,7 @@ public class HotpointController {
     private HotpointService hotpointService;
 
     //去往热点资讯查询后台
+    @RequiresPermissions("user:hotp")
     @RequestMapping("tohotpoint")
     public String tohotpoint(){
         return "hotpoint";
