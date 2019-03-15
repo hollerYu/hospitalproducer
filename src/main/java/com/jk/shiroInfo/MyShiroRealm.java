@@ -33,13 +33,13 @@ public class MyShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         User user = (User)principals.getPrimaryPrincipal();
-        System.out.println("user====>"+user);
+        //System.out.println("user====>"+user);
 
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();      //创建授权
 
         List<String> userData =contentService.queryPermissionByUserId(user.getId());
         for (String userDatum : userData) {
-            System.err.println("userDatum=========>"+userDatum);
+            //System.err.println("userDatum=========>"+userDatum);
             if (userDatum == null) {
                 userDatum= "notPerm";
                // authorizationInfo.addStringPermissions(userDatum);
