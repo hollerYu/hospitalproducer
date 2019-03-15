@@ -5,8 +5,25 @@
 <mapper namespace="com.jk.mapper.HotPointMapper">
 
     <select id="getHotpoint" resultType="com.jk.bean.HotPoint">
-      select * from y_hotspot limit #{start},#{end}
+      select * from y_hotspot
+        <include refid="paging"></include>
+      limit #{start},#{end}
+
     </select>
+
+    <sql id="paging">
+        <where>
+            <if test="HotPoint.titles != null and HotPoint.titles != '' ">
+                and titles like '%${HotPoint.titles}%'
+            </if>
+            <if test="HotPoint.startTime != null  ">
+                and times &gt;= #{HotPoint.startTime}
+            </if>
+            <if test="HotPoint.endTime != null ">
+                and times &lt;= #{HotPoint.endTime}
+            </if>
+        </where>
+    </sql>
 
     <delete id="deleteOne" parameterType="java.lang.Integer" >
     delete from y_hotspot

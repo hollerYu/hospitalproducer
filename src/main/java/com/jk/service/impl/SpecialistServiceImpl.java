@@ -18,9 +18,10 @@ public class SpecialistServiceImpl implements SpecialistService {
     private SpecialistMapper specialistMapper;
 
     @Override
-    public ResultPage getSpecialistAll(Integer page, Integer rows) {
+    public ResultPage getSpecialistAll(Specialist specialist,Integer page, Integer rows) {
         ResultPage resultPage = new ResultPage();
         HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("Specialist",specialist);
         int count = specialistMapper.getSpecialistTotalCount();
         PageUtil<Specialist> pageUtil = new PageUtil<Specialist>(count,page,rows);
         hashMap.put("start",pageUtil.getStartIndex());

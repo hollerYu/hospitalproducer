@@ -1,6 +1,8 @@
 package com.jk.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -24,6 +26,8 @@ public class Comment {
 
     private Integer praseCount;   //点赞数
 
+    @JsonFormat(timezone = "GTM+8",pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createTime;  //评论时间
 
     private Date updateTime;  //修改时间
@@ -37,5 +41,12 @@ public class Comment {
     private String titles;    //标题
 
     private Integer replyState;  //是否回复   为1  已评论  ///为0  未评论
+
+    //临时字段
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date startTime;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date endTime;
 
 }

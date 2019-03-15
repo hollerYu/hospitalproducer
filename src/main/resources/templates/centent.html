@@ -6,6 +6,25 @@
     <script th:src="@{~/common/myJs.jsp}"></script>
 </head>
 <body>
+<div id="toolbar">
+    <form class="form-inline">
+        <div class="form-group">
+            <label for="userContent">评论内容:</label>
+            <input type="text" class="form-control" id="userContent" placeholder="评论内容">
+        </div>
+        <br><br>
+        <div class="form-group">
+            <label for="startTime">时间:</label>
+            <input type="text" class="form-control date"  id="startTime"> -
+            <input type="text" class="form-control date"  id="endTime">
+        </div>
+        <br>
+        <button onclick="searcher()" type="button" class="btn btn-info glyohicon glyohicon-search">搜索</button>
+    </form>
+</div>
+
+
+
 <table id="tableId"></table>
 
 <!--   评论  回复 模态框（Modal） 开始-->
@@ -44,14 +63,12 @@
 
 <script type="application/javascript">
     $(function () {
-
         initDategrid();
     })
 
     var id = null;
     var userId = null;
     var yhMch = "";
-
     function initDategrid() {
         $('#tableId').bootstrapTable({
             toolbar: '#toolbar',
@@ -60,8 +77,6 @@
             pageList: [1, 3, 5, 10, 50],//分页组件
             pageNumber: 1,
             pageSize: 5,//默认每页条数
-            //search:true,//是否显示搜索框
-            //searchText:'试试',//初始化搜索文字
             showColumns: false,//是否显示 内容列下拉框
             showToggle: false,//是否显示 切换试图（table/card）按钮
             showPaginationSwitch: false,//是否显示 数据条数选择框
@@ -70,17 +85,16 @@
             showFooter: false,//是否显示列脚
             clickToSelect: false, //是否启用点击选中行
             sidePagination: 'server',//分页方式：client客户端分页，server服务端分页（*
-            // striped:true,
             queryParams: function () {
-                //	var discuName = $('#discuName').val();
-                //	var startTime = $('#startTime').val();
-                //	var endTime = $('#endTime').val();
+                var userContent = $('#userContent').val();
+                var startTime = $('#startTime').val();
+                var endTime = $('#endTime').val();
                 return {
                     page: this.pageNumber,
                     rows: this.pageSize,
-                    //discuName:discuName,
-                    //startTime:startTime,
-                    //endTime:endTime
+                    userContent:userContent,
+                    startTime:startTime,
+                    endTime:endTime
 
                 };
             },
@@ -106,7 +120,6 @@
                         }
                     }
                 },
-
                 {
                     field: 'createTime', title: '评论时间', width: 100, align: 'center',
 
@@ -144,7 +157,11 @@
             ],
         })
     }
-
+    //条查
+    function searcher(){
+        //debugger;
+        $('#myTable').bootstrapTable('refresh');
+    }
     //审核
     function changeState(state, id) {
         $.ajax({

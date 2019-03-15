@@ -19,11 +19,13 @@ public class HotpointServiceImpl implements HotpointService {
     @Resource
     private HotPointMapper hotPointMapper;
 
-    //查询热点资讯
+    //条件查询热点资讯
+    //分页查询
     @Override
-    public ResultPage getHotpoint(Integer page, Integer rows) {
+    public ResultPage getHotpoint(HotPoint hotPoint, Integer page, Integer rows) {
         ResultPage resultPage = new ResultPage();
         HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("HotPoint",hotPoint);
         int count = hotPointMapper.getHotPointlistTotalCount();
         PageUtil<HotPoint> pageUtil = new PageUtil<HotPoint>(count,page,rows);
         hashMap.put("start",pageUtil.getStartIndex());

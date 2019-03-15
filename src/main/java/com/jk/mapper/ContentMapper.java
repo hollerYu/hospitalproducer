@@ -1,5 +1,6 @@
 package com.jk.mapper;
 
+import com.jk.bean.Comment;
 import com.jk.bean.Permission;
 import com.jk.bean.User;
 import org.apache.ibatis.annotations.Select;
@@ -19,7 +20,7 @@ public interface ContentMapper {
     @Select("select * from y_tree2 where pid = #{i}")
     List<Permission> getTreeData(int i);
 
-    List selectContent();
+    List selectContent(Comment comment);
 
     void changeState(Integer state, Integer id);
 

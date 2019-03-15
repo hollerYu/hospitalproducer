@@ -19,7 +19,6 @@
     <script th:src="@{~/common/myJs.jsp}"></script>
 </head>
 <body>
-
 <div id="toolbar">
     <input type='button' class="btn btn-primary" data-toggle="modal" data-target="#myModal" value='新增'>
     <input type='button' onclick="exportSpecialist()" class="btn btn-primary" value='导出'>
@@ -106,6 +105,11 @@
     $(function(){
         initDategrid();
     })
+    //条查
+    function searcher(){
+        //debugger;
+        $('#myTable').bootstrapTable('refresh');
+    }
     function initDategrid(){
         $('#myList').bootstrapTable({
             toolbar:'#toolbar',
@@ -124,7 +128,6 @@
             sidePagination:'server',//分页方式：client客户端分页，server服务端分页（*
             striped:true,
             queryParams:function(params){
-
                 return{
                     page: this.pageNumber,
                     rows: this.pageSize,

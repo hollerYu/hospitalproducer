@@ -1,8 +1,11 @@
 package com.jk.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.data.annotation.Transient;
 
 import java.util.Date;
 
@@ -30,6 +33,17 @@ public class Log {
     private String ip;
 
     private String url;
+
+    //l临时字段
+    @Transient
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone="GTM+8")
+    private Date startTime;
+
+    @Transient
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone="GTM+8")
+    private Date endTime;
     /**
      *
      * <pre>创建一个新的实例 Log.

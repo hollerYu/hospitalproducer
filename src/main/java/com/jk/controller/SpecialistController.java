@@ -18,8 +18,8 @@ public class SpecialistController {
 
     @RequestMapping("/getSpecialistAll")
     @ResponseBody
-    public ResultPage getSpecialistAll(Integer page, Integer rows) {
-        return specialistService.getSpecialistAll(page, rows);
+    public ResultPage getSpecialistAll(Specialist specialist, Integer page, Integer rows) {
+        return specialistService.getSpecialistAll(specialist,page,rows);
     }
 
     @ResponseBody

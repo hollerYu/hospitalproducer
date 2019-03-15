@@ -6,7 +6,7 @@ import com.jk.untils.ResultPage;
 public interface HotpointService {
 
     //查询热点资讯
-    ResultPage getHotpoint(Integer page, Integer rows);
+    ResultPage getHotpoint(HotPoint hotPoint,Integer page, Integer rows);
 
     void deleteOne(Integer id);
 

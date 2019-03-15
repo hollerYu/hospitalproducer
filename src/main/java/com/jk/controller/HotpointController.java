@@ -28,9 +28,8 @@ public class HotpointController {
     //查询热点资讯
     @RequestMapping("queryHotpoint")
     @ResponseBody
-    public ResultPage getHotpoint(Integer page,Integer rows){
-
-        return hotpointService.getHotpoint(page,rows);
+    public ResultPage getHotpoint(HotPoint hotPoint,Integer page,Integer rows){
+        return hotpointService.getHotpoint(hotPoint,page,rows);
     }
 
     //删除

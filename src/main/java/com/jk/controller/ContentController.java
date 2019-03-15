@@ -1,5 +1,6 @@
 package com.jk.controller;
 
+import com.jk.bean.Comment;
 import com.jk.bean.User;
 import com.jk.service.ContentService;
 import com.jk.untils.ReturnPage;
@@ -117,8 +118,8 @@ public class ContentController {
 
     @RequestMapping("selectContent")
     @ResponseBody
-    public ReturnPage selectContent(Integer page,Integer rows){
-        ReturnPage returnPage=contentService.selectContent(page,rows);
+    public ReturnPage selectContent(Comment comment,Integer page, Integer rows){
+        ReturnPage returnPage=contentService.selectContent(comment,page,rows);
         return returnPage;
     }
 

@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,7 +38,7 @@ public class SpecialistTwoController {
     //查询/分页
     @ResponseBody
     @RequestMapping("querySpecialist")
-    public JSONObject querySpecialist(Integer page, Integer rows) {
+    public JSONObject querySpecialist(SpecialistTwo specialistTwo,Integer page, Integer rows) {
         Query query = new Query();
         JSONObject json = new JSONObject();
         query.skip((page - 1) * rows);

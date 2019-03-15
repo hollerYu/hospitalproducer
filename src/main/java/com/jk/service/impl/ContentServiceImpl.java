@@ -1,5 +1,6 @@
 package com.jk.service.impl;
 
+import com.jk.bean.Comment;
 import com.jk.bean.Permission;
 import com.jk.bean.User;
 import com.jk.mapper.ContentMapper;
@@ -51,12 +52,10 @@ public class ContentServiceImpl implements ContentService {
     }
 
     @Override
-    public ReturnPage selectContent(Integer page, Integer rows) {
-        List<User> list = contentMapper.selectContent();
-
+    public ReturnPage selectContent(Comment comment, Integer page, Integer rows) {
+        List<User> list = contentMapper.selectContent(comment);
         PageHelper.startPage(page, rows);
-        List aa = contentMapper.selectContent();
-
+        List aa = contentMapper.selectContent(comment);
         ReturnPage returnPage = new ReturnPage(list.size(), aa);
         return returnPage;
     }

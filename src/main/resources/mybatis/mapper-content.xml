@@ -8,7 +8,6 @@
     </select>
 
    <select id="selectContent" resultType="Comment">
-
     SELECT
 		yc.*, ycr.replyContent replyContent,
 		yh.titles titles,
@@ -21,17 +20,28 @@
 		y_commentreply ycr,
 		y_hotspot yh
 	WHERE
+
 		tmua.Id = yc.userId
 	AND yh.id = yc.hotPointId
 	and tmua.id=ycr.forReplyId
 	and ycr.toReplyId=yc.userId
+	   <include refid="paging"></include>
    ORDER BY yc.createTime desc
-
    </select>
 
+	<sql id="paging">
+			<if test="userContent != null and userContent != '' ">
+				and userContent like '%${userContent}%'
+			</if>
+			<if test="startTime != null  ">
+				and createTime &gt;= #{startTime}
+			</if>
+			<if test="endTime != null ">
+				and createTime &lt;= #{endTime}
+			</if>
+	</sql>
 	<!--修改评论  状态-->
  <update id="changeState">
-
 	   update y_comment yc set yc.state=#{param1} where yc.id=#{param2}
  </update>
 

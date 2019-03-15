@@ -29,8 +29,25 @@
   <select id="getSpecialistAll" resultMap="BaseResultMap"  >
     select
     <include refid="Base_Column_List" />
-    from c_specialist  order by rank limit #{start},#{end}
+    from c_specialist
+    <include refid="paging"></include>
+     order by
+     rank limit #{start},#{end}
   </select>
+
+  <sql id="paging">
+    <where>
+      <if test="Specialist.name != null and Specialist.name != '' ">
+        and name like '%${Specialist.name}%'
+      </if>
+      <if test="Specialist.startTime != null  ">
+        and creat_time &gt;= #{Specialist.startTime}
+      </if>
+      <if test="Specialist.endTime != null ">
+        and creat_time &lt;= #{Specialist.endTime}
+      </if>
+    </where>
+  </sql>
 
   <select id="getIdByRank" resultType="com.jk.bean.Specialist"  resultMap="BaseResultMap" parameterType="integer">
     select

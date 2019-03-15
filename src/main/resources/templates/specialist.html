@@ -6,6 +6,23 @@
     <script th:src="@{~/common/myJs.jsp}"></script>
 </head>
 <body>
+<div id="toolbar">
+    <form class="form-inline">
+        <div class="form-group">
+            <label for="name">名称:</label>
+            <input type="text" class="form-control" id="name" placeholder="请输入名称">
+        </div>
+        <br><br>
+        <div class="form-group">
+            <label for="startTime">时间:</label>
+            <input type="text" class="form-control date"  id="startTime"> -
+            <input type="text" class="form-control date"  id="endTime">
+        </div>
+        <br>
+        <button onclick="searcher()" type="button" class="btn btn-info glyohicon glyohicon-search">搜索</button>
+    </form>
+</div>
+
 <div id="div-button">
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
         新增
@@ -127,7 +144,6 @@
         language: 'zh-CN',//显示中文
         format: 'yyyy-mm-dd hh:ii:ss',//显示格式
         minView: "hour",//设置只显示到月份
-        //initialDate: new Date(),//初始化当前日期
         autoclose: true,//选中自动关闭
         todayBtn: true//显示今日按钮
     });
@@ -138,6 +154,7 @@
 
     function getMessageToHtml() {
         $('#myTable').bootstrapTable({
+            toolbar:'#toolbar',
             url: '/specialist/getSpecialistAll',         //请求后台的URL（*）
             method: 'get',                      //请求方式（*）
             toolbar: '#div-button',                //工具按钮用哪个容器
@@ -150,23 +167,18 @@
             pageNumber: 1,                       //初始化加载第一页，默认第一页
             pageSize: 5,                       //每页的记录行数（*）
             pageList: [5, 10, 20, 50],        //可供选择的每页的行数（*）
-            /* queryParams: function (params) { // 请求服务器数据时发送的参数，可以在这里添加额外的查询参数，返回false则终止请求
-				console.log(params)
-		  		return { //这里return值就是请求 url属性时携带的参数
-			     	pageSize: params.limit, // 每页要显示的数据条数
-			        offset: params.offset, // 每页显示数据的开始行号
-			        sear_name:params.search,
-			        email:$("#exampleInputEmail1").val()
-		        }
-	      	}, */
             queryParams: function (params) {
+                var name = $('#name').val();
+                var startTime = $('#startTime').val();
+                var endTime = $('#endTime').val();
                 return {
                     page: this.pageNumber,
                     rows: this.pageSize,
-                    //loginAcct:params.search,
+                    name:name,
+                    startTime:startTime,
+                    endTime:endTime
                 };
             },//传递参数（*）
-            search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
             strictSearch: true,
             showColumns: true,                  //是否显示所有的列
             showRefresh: true,                  //是否显示刷新按钮
@@ -228,6 +240,12 @@
                 console.info("加载数据失败");
             }
         });
+    }
+
+    //条查
+    function searcher(){
+        //debugger;
+        $('#myTable').bootstrapTable('refresh');
     }
 
     function getUp(id,rank) {

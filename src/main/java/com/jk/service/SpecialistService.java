@@ -4,7 +4,7 @@ import com.jk.bean.Specialist;
 import com.jk.untils.ResultPage;
 
 public interface SpecialistService {
-    ResultPage getSpecialistAll(Integer page, Integer rows);
+    ResultPage getSpecialistAll(Specialist specialist,Integer page, Integer rows);
 
     void deleteOne(Integer id);
 

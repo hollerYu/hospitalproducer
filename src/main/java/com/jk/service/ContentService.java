@@ -1,5 +1,6 @@
 package com.jk.service;
 
+import com.jk.bean.Comment;
 import com.jk.bean.User;
 import com.jk.untils.ReturnPage;
 import sun.reflect.generics.tree.Tree;
@@ -17,7 +18,7 @@ public interface ContentService {
 
     List<Tree> getTreeData();
 
-    ReturnPage selectContent(Integer page, Integer rows);
+    ReturnPage selectContent(Comment comment, Integer page, Integer rows);
 
     void changeState(Integer state, Integer id);
 
