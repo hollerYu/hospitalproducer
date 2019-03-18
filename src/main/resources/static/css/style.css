@@ -29,7 +29,7 @@
 	img{max-width:100%;}
 /*-- //Reset-Code --*/
 body {
-	background:url('https://img.alicdn.com/imgextra/i2/2678200064/O1CN01mifSD01CLLqnmIZm5_!!0-item_pic.jpg_430x430q90.jpg') no-repeat 0px 0px;
+	background:#CCCCFF url('/bgimage.gif') no-repeat 0px 0px;
 	background-size: cover;
 	font-family: 'Open Sans', sans-serif;
 	background-attachment: fixed;

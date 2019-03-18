@@ -19,6 +19,7 @@
     function getChart(){
         var myChart = echarts.init(document.getElementById('main'));
         $.get('/echarts/getChart', function (data) {
+           console.log(data);
             myChart.setOption({
                 legend:{data:data.name},
                 series: {data: data},

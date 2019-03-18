@@ -7,9 +7,11 @@
     <result column="videoPath" property="videoPath" jdbcType="VARCHAR" />
     <result column="details" property="details" jdbcType="VARCHAR" />
     <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="pointxs" property="pointxs" jdbcType="VARCHAR" />
+    <result column="pointys" property="pointys" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, minTitle, videoPath, details, title
+    id, minTitle, videoPath, details, title,pointxs,pointys
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -22,6 +24,7 @@
     from l_condition
     limit #{start},#{end}
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from l_condition
     where id = #{id,jdbcType=INTEGER}
@@ -47,6 +50,12 @@
       <if test="title != null" >
         title,
       </if>
+      <if test="pointxs != null" >
+        pointxs,
+      </if>
+      <if test="pointys != null" >
+        pointys,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="minTitle != null" >
@@ -60,6 +69,12 @@
       </if>
       <if test="title != null" >
         #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="pointxs != null" >
+        #{pointxs,jdbcType=VARCHAR},
+      </if>
+      <if test="pointys != null" >
+        #{pointys,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>

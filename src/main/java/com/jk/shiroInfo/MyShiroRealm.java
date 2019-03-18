@@ -41,8 +41,7 @@ public class MyShiroRealm extends AuthorizingRealm {
         for (String userDatum : userData) {
             //System.err.println("userDatum=========>"+userDatum);
             if (userDatum == null) {
-                userDatum= "notPerm";
-               // authorizationInfo.addStringPermissions(userDatum);
+              continue;
             }
         }
         authorizationInfo.addStringPermissions(userData);
@@ -65,13 +64,12 @@ public class MyShiroRealm extends AuthorizingRealm {
         if(userData == null){
             return null;
         }
-        //wo ->  guster  ps:123456    实参 -> guster  abcpassword123
+        //SimpleAuthenticationInfo 构造方法中只需放入正确的用户名和密码即可
         SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(
                 userData,
                 userData.getYhMm(),
                 this.getName()
         );
-        //SimpleAuthenticationInfo 构造方法中只需放入正确的用户名和密码即可
 
         super.clearCachedAuthorizationInfo(simpleAuthenticationInfo.getPrincipals());    //清之前的授权信息
 

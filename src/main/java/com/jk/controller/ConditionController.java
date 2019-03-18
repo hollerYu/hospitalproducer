@@ -25,6 +25,8 @@ public class ConditionController {
     @ResponseBody
     @RequestMapping("/saveOrUpdate")
     public String saveCondition(Condition condition) {
+        //System.err.println("condition====>"+condition);
+      //  System.err.println("condition"+condition);
         if (condition.getId()==null){
             conditionService.saveCondition(condition);
             return "1";
