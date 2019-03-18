@@ -16,6 +16,11 @@ public class Condition implements Serializable {
 
     private String title;
 
+    //经纬度
+    private String pointxs;
+
+    private String pointys;
+
     private Integer map;
 
 }

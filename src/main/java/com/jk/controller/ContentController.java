@@ -1,7 +1,6 @@
 package com.jk.controller;
 
 import com.jk.bean.Comment;
-import com.jk.bean.User;
 import com.jk.service.ContentService;
 import com.jk.untils.ReturnPage;
 import org.apache.shiro.SecurityUtils;
@@ -10,7 +9,6 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,7 +48,6 @@ public class ContentController {
     public String insertForm(String username, String password,HttpSession session){
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-           System.err.println("token====>"+token);
         try {
             subject.login(token);//登录分两种情况 一种是成功 另一种是失败{1.账号不存在  2.密码错误}
         } catch (IncorrectCredentialsException e) { // catch只会走进其中一个代码块 所以大的异常放到小的异常下面
@@ -67,7 +64,7 @@ public class ContentController {
             return "login";
         }
         session.setAttribute("user",token.getUsername());
-        System.out.println("校验密码完成");
+      //  System.out.println("校验密码完成");
         return "index";
     }
 
@@ -118,7 +115,7 @@ public class ContentController {
 
     @RequestMapping("selectContent")
     @ResponseBody
-    public ReturnPage selectContent(Comment comment,Integer page, Integer rows){
+    public ReturnPage selectContent(Comment comment, Integer page, Integer rows){
         ReturnPage returnPage=contentService.selectContent(comment,page,rows);
         return returnPage;
     }
@@ -135,7 +132,6 @@ public class ContentController {
             return false;
         }
     }
-
 
 
 }
