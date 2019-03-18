@@ -16,4 +16,6 @@ public class Condition implements Serializable {
 
     private String title;
 
+    private Integer map;
+
 }

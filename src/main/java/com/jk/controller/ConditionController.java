@@ -49,4 +49,18 @@ public class ConditionController {
         return condition;
     }
 
+    @RequestMapping("editmap")
+    @ResponseBody
+    public String editmap(Integer id){
+        conditionService.editmap(id);
+        return "1";
+    }
+
+    @RequestMapping("editConcelmap")
+    @ResponseBody
+    public String editConcelmap(Integer id){
+        conditionService.editConcelmap(id);
+        return "1";
+    }
+
 }

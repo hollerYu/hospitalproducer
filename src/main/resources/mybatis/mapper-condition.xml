@@ -18,8 +18,7 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="getCondition" resultMap="BaseResultMap" parameterType="map" >
-    select
-    <include refid="Base_Column_List" />
+    select *
     from l_condition
     limit #{start},#{end}
   </select>
@@ -90,4 +89,15 @@
       title = #{title,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <update id="editmap" parameterType="com.jk.bean.Condition">
+    update l_condition
+    set map = 1
+    where id = #{id}
+  </update>
+  <update id="editConcelmap" parameterType="com.jk.bean.Condition">
+    update l_condition
+    set map = 0
+    where id = #{id}
+  </update>
+
 </mapper>

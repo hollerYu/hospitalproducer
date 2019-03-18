@@ -1,6 +1,7 @@
 package com.jk.mapper;
 
 import com.jk.bean.Condition;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.HashMap;
@@ -23,4 +24,8 @@ public interface ConditionMapper {
     int getConditionTotalCount();
 
     List<Condition> getCondition(HashMap<String, Object> hashMap);
+
+    void editmap(@Param("id") Integer id);
+
+    void editConcelmap(@Param("id") Integer id);
 }

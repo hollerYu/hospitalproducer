@@ -13,4 +13,8 @@ public interface ConditionService {
     Condition queryById(Integer id);
 
     void updateById(Condition condition);
+
+    void editmap(Integer id);
+
+    void editConcelmap(Integer id);
 }

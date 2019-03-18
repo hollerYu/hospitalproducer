@@ -129,8 +129,14 @@
 
                 {
                     field: '222', title: '操作', formatter: function (value, row, index) {
-                        return '<button onclick="deleteItem(' + row.id + ',\'' + row.title + '\')" class="btn btn-error" >删除</button><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="updateById(' + row.id + ')" >修改</button>';
-                    }
+                        if (row.map == 0){
+                            return '<button onclick="deleteItem(' + row.id + ',\'' + row.title + '\')" class="btn btn-error" >删除</button><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="updateById(' + row.id + ')" >修改</button>' +
+                                '<button type="button" class="btn btn-primary" data-toggle="modal"  onclick="editmap(' + row.id + ')">隐藏</button>';
+                        }else{
+                            return '<button onclick="deleteItem(' + row.id + ',\'' + row.title + '\')" class="btn btn-error" >删除</button><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="updateById(' + row.id + ')" >修改</button>' +
+                                '<button type="button" class="btn btn-primary" data-toggle="modal"  onclick="editmap2(' + row.id + ')">取消隐藏</button>';
+                        }
+                        }
                 }
             ],
             onLoadSuccess: function () {  //加载成功时执行
@@ -205,5 +211,37 @@
     function closed() {
         document.getElementById("sss").reset();
     }
+
+    function editmap(id){
+
+        $.ajax({
+            url:"/condition/editmap",
+            type: "POST",
+            data: {"id": id},
+            dataType: 'json',
+            success: function (data) {
+                if (data == 1) {
+                    $('#myTable').bootstrapTable('refresh');
+                }
+
+            }
+        })
+    }
+
+    function editmap2(id){
+        $.ajax({
+            url:"/condition/editConcelmap",
+            type: "POST",
+            data: {"id": id},
+            dataType: 'json',
+            success: function (data) {
+                if (data == 1) {
+                    $('#myTable').bootstrapTable('refresh');
+                }
+
+            }
+        })
+    }
+
 </script>
 </html>

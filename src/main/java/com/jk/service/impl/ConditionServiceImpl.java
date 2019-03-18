@@ -56,4 +56,15 @@ public class ConditionServiceImpl implements ConditionService {
     public void updateById(Condition condition) {
         conditionMapper.updateByPrimaryKeySelective(condition);
     }
+
+    @Override
+    public void editmap(Integer id) {
+        conditionMapper.editmap(id);
+    }
+
+    @Override
+    public void editConcelmap(Integer id) {
+        conditionMapper.editConcelmap(id);
+    }
+
 }
