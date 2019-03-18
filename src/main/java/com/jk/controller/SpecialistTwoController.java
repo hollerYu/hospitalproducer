@@ -2,16 +2,17 @@ package com.jk.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jk.bean.SpecialistTwo;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import com.jk.untils.ExportExcel;
 import com.jk.untils.ImportExcel;
+import com.jk.untils.OssUpFileUtil;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +20,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class SpecialistTwoController {
@@ -114,6 +116,31 @@ public class SpecialistTwoController {
         } else {
             return "0";
         }
+    }
+
+    //OOS图片上传
+    @ResponseBody
+    @RequestMapping("addFiletwo")
+    public String addFile(@RequestParam("headimg") MultipartFile file){
+        Map<String, Object> stringObjectMap = OssUpFileUtil.uploadFile(file);
+        String count = "";
+        for(String key : stringObjectMap.keySet()){
+            Object o = stringObjectMap.get(key);
+            System.out.println("key: " + key + " value: " + o);
+            if(key=="url"){
+                count+=o;
+            }
+        }
+      return count;
+    }
+    //短信登陆
+    //@ResponseBody
+    //@RequestMapping("")
+    //去注册
+    @RequestMapping("register")
+    public String register(){
+
+       return "register";
     }
 
 }
