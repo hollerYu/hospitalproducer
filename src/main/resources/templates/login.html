@@ -2,40 +2,36 @@
 <html lang="en" xmlns:th="http://www.springframework.org/schema/jdbc">
 <head>
     <meta charset="UTF-8">
-    <title>登录</title>
-    <script th:src="@{~/common/myJs.jsp}"></script>
+    <title>婴幼儿营养研究院后台登录系统</title>
+    <link rel="stylesheet" href="../css/style.css" type="text/css"/>
+   <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+
 </head>
 <body>
-<div style="float: left">
-<form id="ss" style="margin-left:300px;margin-top:100px;" action="/contentYjm/insertForm" method="post">
-    <table>
-        <caption><center>登录</center></caption>
-        <thead>
-        <tr>
-            <td>用户名</td>
-            <td><input type="text" class="form-control" name="username"></td>
-            <td><br/></td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>密码</td>
-            <td><input class="form-control" type="password" name="password"></td>
-            <td><br/></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td colspan="2">
-                <center><input type="submit" class="btn btn-info btn-block" value="提交"></center>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</form>
+<h1>婴幼儿营养研究院后台登录系统</h1>
+<div class="container w3">
+    <h2>现在登录</h2>
+    <form method="post" action="/contentYjm/insertForm">
+        <div class="username">
+            <span class="username" style="height:19px">用户:</span>
+            <input type="text" name="username" class="name" placeholder="" required="">
+            <div class="clear"></div>
+        </div>
+        <div class="password-agileits">
+            <span class="username"style="height:19px">密码:</span>
+            <input type="password" name="password" class="password" placeholder="" required="">
+            <div class="clear"></div>
+        </div>
+        <div class="login-w3">
+            <input type="submit" class="login" value="Login">
+        </div>
+        <div class="clear"></div>
+    </form>
 </div>
-<div style="float: left;margin-top: 1%">
-    <center><span th:text="${session.msg}"></span></center>
+<div class="footer-w3l">
+    <p> 婴幼儿营养研究院后台登录系统</p>
 </div>
+
 <script>
 
 
