@@ -29,7 +29,7 @@
 	img{max-width:100%;}
 /*-- //Reset-Code --*/
 body {
-	background:#FFCCCC url('/bgimage.gif') no-repeat 0px 0px;
+	background:#CCCCFF url('/bgimage.gif') no-repeat 0px 0px;
 	background-size: cover;
 	font-family: 'Open Sans', sans-serif;
 	background-attachment: fixed;

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="robots" content="noindex, nofollow">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script th:src="@{~/common/myJs.jsp}"></script>
+
+<style type="text/css">
+    body, html, #allmap {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        margin: 0;
+        font-family: "微软雅黑";
+    }
+</style>
+
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=39b92e64ae5622663ceceaccd8ab8eb1"></script>
+<title>地图展示</title>
+
+
+</head>
+<body>
+<div id="allmap" style="width:500px;height:420px;margin:100px"></div>
+
+<input type="text" name="pointX">
+<input type="text" name="pointY">
+
+<script type="text/javascript">
+    // 百度地图API功能
+    var map = new BMap.Map("allmap",{minZoom:4,maxZoom:12});    // 创建Map实例,并设置地图最大最小级别
+    map.centerAndZoom(new BMap.Point(116.394601, 39.855712), 9);  // 初始化地图,设置中心点坐标和地图级别
+    map.addControl(new BMap.MapTypeControl({mapTypes: [BMAP_NORMAL_MAP,BMAP_SATELLITE_MAP,BMAP_HYBRID_MAP ]}));   //添加地图类型控件
+    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+    //删除标注点
+    var removeMarker = function(e,ee,marker){
+        map.removeOverlay(marker);
+    }
+    // 添加定位控件
+    var geolocationControl = new BMap.GeolocationControl();
+    geolocationControl.addEventListener("locationSuccess", function(e){
+        // 定位成功事件
+        var address = '';
+        address += e.addressComponent.province;
+        address += e.addressComponent.city;
+        address += e.addressComponent.district;
+        address += e.addressComponent.street;
+        address += e.addressComponent.streetNumber;
+        alert("当前定位地址为：" + address);
+    });
+    geolocationControl.addEventListener("locationError",function(e){
+        // 定位失败事件
+        alert(e.message);
+    });
+    map.addControl(geolocationControl);
+
+    //左键单击地图响应事件
+    map.addEventListener("click", function(n){
+        //1.点击动态生成标注点
+        var point=new BMap.Point(n.point.lng,n.point.lat);
+        var marker =new BMap.Marker(point);
+        map.addOverlay(marker);
+        //2.为标注点生成右击菜单
+        //创建菜单
+        var markerMenu =new BMap.ContextMenu();
+        markerMenu.addItem(new BMap.MenuItem('删除',removeMarker.bind(marker)));
+        marker.addContextMenu(markerMenu);
+        //3.调用后端接口存储该标注信息
+
+
+    var geolocation = new BMap.Geolocation();
+    geolocation.getCurrentPosition(function(r){
+        if(this.getStatus() == BMAP_STATUS_SUCCESS){
+            var mk = new BMap.Marker(r.point);
+            map.addOverlay(mk);
+            map.panTo(r.point);
+            alert('您的位置：'+r.point.lng+','+r.point.lat);
+            $("[name='pointX']").val(r.point.lng)
+            $("[name='pointY']").val(r.point.lat)
+
+        }
+        else {
+            alert('failed'+this.getStatus());
+        }
+    });
+
+
+
+</script>
+</body>
+</html>
+
