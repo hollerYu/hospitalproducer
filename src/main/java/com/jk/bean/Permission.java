@@ -43,6 +43,8 @@ public class Permission implements Serializable{
 
 	private List nodes;
 
+	private Boolean checked;
+
 	private String permission; //权限字符串,menu例子：role:*，button例子：role:create,role:update,role:delete,role:view
 
 	private List<Role> roles;

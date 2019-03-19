@@ -3,10 +3,9 @@ package com.jk.mapper;
 import com.jk.bean.Comment;
 import com.jk.bean.Permission;
 import com.jk.bean.User;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @Auther: yjm
@@ -17,8 +16,7 @@ public interface ContentMapper {
 
     User insertForm(User user);
 
-    @Select("select * from y_tree2 where pid = #{i}")
-    List<Permission> getTreeData(int i);
+    List<Permission> getTreeData(@Param("pid") Integer pid, @Param("id") Integer id);
 
     List selectContent(Comment comment);
 
@@ -28,5 +26,5 @@ public interface ContentMapper {
 
     List<String> queryPermissionByUserId(Integer id);
 
-
+    List<Integer> getPermissionById(Integer id);
 }

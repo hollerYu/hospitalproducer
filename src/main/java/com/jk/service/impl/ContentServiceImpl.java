@@ -11,7 +11,6 @@ import com.github.pagehelper.PageHelper;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @Auther: yjm
@@ -29,10 +28,10 @@ public class ContentServiceImpl implements ContentService {
         return contentMapper.insertForm(user);
     }
 
-    public List getTreeData() {
-        List<Permission> permissionPrant = contentMapper.getTreeData(0);
+    public List getTreeData(Integer id) {
+        List<Permission> permissionPrant = contentMapper.getTreeData(0,id);
 
-        getForeachData(permissionPrant);
+        getForeachData(permissionPrant,id);
 
         return permissionPrant;
     }
@@ -40,14 +39,15 @@ public class ContentServiceImpl implements ContentService {
     /**
      * 递归
      */
-    private void getForeachData(List<Permission> permissionPrant) {
+    private void getForeachData(List<Permission> permissionPrant,Integer id) {
         for (Permission permission : permissionPrant) {
-            List<Permission> nodesData=contentMapper.getTreeData(permission.getId());
+            List<Permission> nodesData=contentMapper.getTreeData(permission.getId(),id);
 
-            if(nodesData.size()>0){
+            if(nodesData !=null && nodesData.size()>0){
                 permission.setNodes(nodesData);
-                getForeachData(nodesData);
             }
+            getForeachData(nodesData,id);
+            permission.setNodes(nodesData);
         }
     }
 

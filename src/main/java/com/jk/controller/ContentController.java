@@ -1,6 +1,7 @@
 package com.jk.controller;
 
 import com.jk.bean.Comment;
+import com.jk.bean.User;
 import com.jk.service.ContentService;
 import com.jk.untils.ReturnPage;
 import org.apache.shiro.SecurityUtils;
@@ -63,7 +64,7 @@ public class ContentController {
             session.setAttribute("msg", "未知异常");
             return "login";
         }
-        session.setAttribute("user",token.getUsername());
+      //  session.setAttribute("user",token.getUsername());
       //  System.out.println("校验密码完成");
         return "index";
     }
@@ -102,7 +103,8 @@ public class ContentController {
 	@RequestMapping("getTreeData")
 	@ResponseBody
 	public List<Tree> getTreeData(HttpSession session){
-		List<Tree> list = contentService.getTreeData();
+        User user = (User)session.getAttribute("user");
+        List<Tree> list = contentService.getTreeData(user.getId());
 		return list;
 	}
 
