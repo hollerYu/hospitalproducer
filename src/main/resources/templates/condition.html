@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script th:src="@{~/common/myJs.jsp}"></script>
-
+    <script src="/js/echarts/echarts.js"></script>
     <meta name="robots" content="noindex, nofollow">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=39b92e64ae5622663ceceaccd8ab8eb1"></script>
@@ -88,6 +88,8 @@
     </div>
 
 </div>
+
+
 <table class="table table-bordered comTable table1" id="myTable"></table>
 
 <!--地图显示 开始-->
@@ -110,12 +112,68 @@
     </div>
 </div>
 <!--地图显示 结束-->
-
+<!-- Echarts -->
+<!--<div id="main" style="width: 600px;height:400px;"></div>
+<button type="button" onclick="getChart()">2019年每月发布数量比例数据</button>-->
+<div id="main" style="width: 600px;height:400px;"></div>
 </body>
+<script>
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById("main"));
+    //发起get请求
+    $.get('/condition/queryByYue', function (data) {
+     /* function fmtDate(obj){
+            var date =  new Date(obj);
+            var y = 1900+date.getYear();
+            var m = "0"+(date.getMonth()+1);
+            var d = "0"+date.getDate();
+            return y+"-"+m.substring(m.length-2,m.length)+"-"+d.substring(d.length-2,d.length);
+
+        }*/
+        myChart.setOption({
+            xAxis: {data: data.systime},
+            series: {data: data.number}
+        })
+    });
+    // 指定图表的配置项和数据
+    myChart.setOption({
+        title: {
+            text: '2019年每月发布数量'
+        },
+        tooltip: {},
+        legend: {
+            data: ['每月']
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                dataView: {readOnly: false},
+                magicType: {type: ['line', 'bar']},
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            data: []
+        },
+        yAxis: {},
+        series: [{
+            name: '数量',
+            type: 'bar',
+            data: []
+        }]
+    });
+</script>
 <script>
     $(function () {
         getConditionToHtml();
     })
+
+
+
     function addMongo() {
         $.ajax({
             url: "/condition/saveOrUpdate",
