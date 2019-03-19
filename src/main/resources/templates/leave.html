@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script th:src="@{~/common/myJs.jsp}"></script>
+</head>
+<body>
+<div id="toolbar">
+    <input type='button' class="btn btn-primary" data-toggle="modal" data-target="#myModal" value='新增'><br><br>
+    <form class="form-inline">
+        <div class="form-group">
+            <label for="leavetitle">标题:</label>
+            <input type="text" class="form-control" id="leavetitle" placeholder="标题">
+        </div>
+        <br><br>
+        <div class="form-group">
+            <label for="expertname">名称:</label>
+            <input type="text" class="form-control" id="expertname" placeholder="名称">
+        </div>
+        <br><br>
+        <div class="form-group">
+            <label for="startTime">时间:</label>
+            <input type="text" class="form-control date"  id="startTime"> -
+            <input type="text" class="form-control date"  id="endTime">
+        </div>
+        <br>
+        <button onclick="searcher()" type="button" class="btn btn-info glyohicon glyohicon-search">搜索</button>
+    </form>
+</div>
+<table id="myTable"></table>
+
+<!--模态框-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <form id="addForm" class="form-horizontal">
+                        <div class="row">
+                            <div class="col-xs-2">标题</div>
+                            <div class="col-xs-10">
+                                <input type="text" class="form-control" name="leavetitle">
+                            </div>
+                            <div class="col-xs-2">名称</div>
+                            <div class="col-xs-10">
+                                <input type="text" class="form-control" name="expertname">
+                            </div>
+                            <div class="col-xs-2">发布时间</div>
+                            <div class="col-xs-10">
+                                <input type="text" class="form-control date" name="systime">
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <!-- 模态框底部 -->
+            <div class="modal-footer">
+                <button type="button" onclick="addForm()" class="btn btn-primary">保存</button>
+                <button type="button" class="btn btn-secondary" onclick="closed()" data-dismiss="modal">关闭</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+<script>
+
+    $(function () {
+        getMessageToHtml();
+    })
+
+    //data框
+    $('.date').datetimepicker({
+        language: 'zh-CN',//显示中文
+        format: 'yyyy-mm-dd',//显示格式  hh:ii:ss
+        minView: "month",//设置只显示到月份
+        initialDate: new Date(),//初始化当前日期
+        autoclose: true,//选中自动关闭
+        todayBtn: true//显示今日按钮
+    });
+
+    function getMessageToHtml() {
+        $('#myTable').bootstrapTable({
+            toolbar:'#toolbar',
+            url: '/leave/getlistAll',         //请求后台的URL（*）
+            method: 'get',                      //请求方式（*）
+            toolbar: '#div-button',                //工具按钮用哪个容器
+            striped: true,                      //是否显示行间隔色
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            sortable: false,                     //是否启用排序
+            sortOrder: "asc",                   //排序方式
+            pagination: true,                   //是否显示分页（*）
+            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+            pageNumber: 1,                       //初始化加载第一页，默认第一页
+            pagination:true, //是否展示分页
+            pageList:[1,3,5, 10, 50],     //分页组件
+            queryParams: function (params) {
+                var leavetitle = $('#leavetitle').val();
+                var expertname = $('#expertname').val();
+                var startTime = $('#startTime').val();
+                var endTime = $('#endTime').val();
+                return {
+                    page: this.pageNumber,
+                    rows: this.pageSize,
+                    leavetitle:leavetitle,
+                    expertname:expertname,
+                    startTime:startTime,
+                    endTime:endTime
+                };
+            },//传递参数（*）
+            strictSearch: true,
+            showColumns: true,                  //是否显示所有的列
+            showRefresh: true,                  //是否显示刷新按钮
+            minimumCountColumns: 2,             //最少允许的列数
+            clickToSelect: true,                //是否启用点击选中行
+            height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+            uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
+            showToggle: true,                    //是否显示详细视图和列表视图的切换按钮
+            cardView: false,                    //是否显示详细视图
+            detailView: false,                   //是否显示父子表
+            columns: [
+                {field: '111', checkbox: true},
+                {field: 'leavetitle', title: '标题'},
+                {field: 'expertname', title: '名称'},
+                {field: 'systime', title: '发布时间'},
+                {
+                    field: '222', title: '操作', formatter: function (value, row, index) {
+                        return '<button onclick="deleteItem(' + row.id + ',\'' + row.name + '\')" class="btn btn-error" >删除</button>';
+                    }
+                }
+            ],
+            onLoadSuccess: function () {  //加载成功时执行
+                console.info("加载成功");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.info("加载数据失败");
+            }
+        });
+    }
+
+    function addForm() {
+        $.ajax({
+            url: "/leave/saveEssay",
+            async: true,
+            type: "POST",
+            data: $("#addForm").serialize(),
+            dataType: "json",
+            success: function (data) {
+                if (data == 1) {
+                    $('body').on('hidden.bs.modal', '.modal', function () {
+                        $(this).removeData('bs.modal');
+                    });
+                    layer.msg('新增成功!');
+                    window.location.reload();
+                }
+            },
+            error: function (e) {
+                alert("网络连接失败，请您稍后再试！");
+            }
+        });
+    }
+
+
+    //条查
+    function searcher(){
+        //debugger;
+        $('#myTable').bootstrapTable('refresh');
+    }
+
+    function deleteItem(id, name) {
+        bootbox.confirm("你确定要删除吗?", function (result) {
+            if (result) {
+                $.ajax({
+                    url: '/leave/deleteOne',
+                    type: 'post',
+                    data: {"id": id},
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data == 1) {
+                            $('#myTable').bootstrapTable('refresh');
+                        }
+                    }
+                })
+            }
+        })
+    }
+</script>
+</html>

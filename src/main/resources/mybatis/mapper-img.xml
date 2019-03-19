@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jk.mapper.ImgMapper">
+
+    <select id="getimglistAll" resultType="com.jk.bean.Img">
+       select id,title,path_url,jianjie
+       from t_img
+        <include refid="paging"></include>
+       limit #{start},#{end}
+    </select>
+
+    <sql id="paging">
+        <where>
+            <if test="Img.title != null and Img.title != '' ">
+                and title like '%${Img.title}%'
+            </if>
+        </where>
+    </sql>
+
+    <delete id="deleteOne" parameterType="java.lang.Integer">
+        delete from t_img
+    where id = #{id}
+    </delete>
+
+    <insert id="saveEssay" parameterType="com.jk.bean.Img" >
+    insert into t_img (id, title, path_url,jianjie)
+    values (#{id}, #{title}, #{path_url},#{jianjie})
+  </insert>
+</mapper>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jk.mapper.LeaveMapper">
+
+    <select id="getlistAll" resultType="com.jk.bean.Leave">
+        select id,leavetitle,expertname,systime
+        from l_leave
+        <include refid="paging"></include>
+        limit #{start},#{end}
+    </select>
+
+    <sql id="paging">
+        <where>
+            <if test="Leave.leavetitle != null and Leave.leavetitle != '' ">
+                and leavetitle like '%${Leave.leavetitle}%'
+            </if>
+            <if test="Leave.expertname != null and Leave.expertname != '' ">
+                and expertname like '%${Leave.expertname}%'
+            </if>
+            <if test="Leave.startTime != null  ">
+                and systime &gt;= #{Leave.startTime}
+            </if>
+            <if test="Leave.endTime != null ">
+                and systime &lt;= #{Leave.endTime}
+            </if>
+        </where>
+    </sql>
+
+
+    <delete id="deleteOne" parameterType="java.lang.Integer">
+        delete from l_leave
+    where id = #{id}
+    </delete>
+
+    <insert id="saveEssay" parameterType="com.jk.bean.Leave" >
+    insert into l_leave (id, leavetitle, expertname,systime)
+    values (#{id}, #{leavetitle}, #{expertname},#{systime})
+  </insert>
+</mapper>
