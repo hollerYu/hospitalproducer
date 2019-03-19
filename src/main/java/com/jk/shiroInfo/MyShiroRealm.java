@@ -12,8 +12,13 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -60,7 +65,7 @@ public class MyShiroRealm extends AuthorizingRealm {
         //当前登录的用户名
         String username = token.getPrincipal().toString();
         User userData = contentService.queryByUserName(username);
-        //System.err.println("userData====>"+userData);
+        System.err.println("userData====>"+userData);
         if(userData == null){
             return null;
         }
@@ -72,7 +77,14 @@ public class MyShiroRealm extends AuthorizingRealm {
         );
 
         super.clearCachedAuthorizationInfo(simpleAuthenticationInfo.getPrincipals());    //清之前的授权信息
-
+//清之前的授权信息
+        super.clearCachedAuthorizationInfo(simpleAuthenticationInfo.getPrincipals());
+        //获取SESSION 存入对象
+        RequestAttributes ra = RequestContextHolder.getRequestAttributes();
+        ServletRequestAttributes sra = (ServletRequestAttributes) ra;
+        HttpServletRequest request = sra.getRequest();
+        HttpSession session = request.getSession();
+        session.setAttribute("user",userData);
         return simpleAuthenticationInfo;//如果此处返回null 会报UnknownAccountException 没有此账号的异常
         //如果用户名和密码不匹配会抛出 IncorrectCredentialsException异常
     }

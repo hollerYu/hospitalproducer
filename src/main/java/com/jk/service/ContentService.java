@@ -6,7 +6,6 @@ import com.jk.untils.ReturnPage;
 import sun.reflect.generics.tree.Tree;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @Auther: yjm
@@ -16,7 +15,7 @@ import java.util.Set;
 public interface ContentService {
     User insertForm(User user);
 
-    List<Tree> getTreeData();
+    List<Tree> getTreeData(Integer id);
 
     ReturnPage selectContent(Comment comment, Integer page, Integer rows);
 

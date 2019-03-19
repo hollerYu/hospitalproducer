@@ -2,6 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jk.mapper.ContentMapper">
 
+	<select id="getTreeData" resultType="Permission">
+		 select DISTINCT yt.* from yjm_user_role yur,yjm_role_permission yrp,y_tree2 yt
+ where yur.role_id=yrp.role_id and yrp.tree_id=yt.id and yt.pid=#{pid} and yur.user_id=#{id}
+	</select>
+
     <select id="insertForm" resultType="User">
 
         select id,yh_mch yhMch,yh_mm yhMm from t_mall_user_account where yh_mch = #{yhMch} and yh_mm = #{yhMm}
@@ -66,6 +71,12 @@
 
 	</select>
 
+ <select id="getPermissionById" resultType="Permission">
 
+	select yt.id id from y_tree2 yt,yjm_role_permission yrp,yjm_role yr,yjm_user_role yur
+
+ where yur.role_id=yr.role_id and yrp.tree_id=yt.id and yur.user_id=#{id}
+
+ </select>
 
 </mapper>
