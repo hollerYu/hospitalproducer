@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("condition")
@@ -15,6 +20,27 @@ public class ConditionController {
 
     @Resource
     private ConditionService conditionService;
+
+    @RequestMapping("queryByYue")
+    @ResponseBody
+    public Map<String, Object> histogram(){
+        HashMap<String, Object> params = new HashMap<>();
+        ArrayList a = new ArrayList<>();
+        ArrayList<Integer> b = new ArrayList<>();
+        List<Condition> copySku = conditionService.histogram();
+        for (Condition sku : copySku) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");//设置日期格式
+            String format = sdf.format(sku.getSystime());
+            a.add(format);
+            b.add(Integer.valueOf(sku.getNumber()));
+        }
+        System.out.println(a);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        params.put("systime",a);
+        params.put("number",b);
+        System.out.println("=================>"+params);
+        return params;
+    }
 
     @ResponseBody
     @RequestMapping("/getCondition")
@@ -64,5 +90,7 @@ public class ConditionController {
         conditionService.editConcelmap(id);
         return "1";
     }
+
+
 
 }

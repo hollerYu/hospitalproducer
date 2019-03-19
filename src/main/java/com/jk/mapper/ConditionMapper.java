@@ -28,4 +28,7 @@ public interface ConditionMapper {
     void editmap(@Param("id") Integer id);
 
     void editConcelmap(@Param("id") Integer id);
+
+    List<Condition> histogram();
+
 }

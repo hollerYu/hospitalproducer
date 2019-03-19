@@ -67,4 +67,12 @@ public class ConditionServiceImpl implements ConditionService {
         conditionMapper.editConcelmap(id);
     }
 
+    @Override
+    public List<Condition> histogram() {
+        List<Condition> list = conditionMapper.histogram();
+        return list;
+
+    }
+
+
 }

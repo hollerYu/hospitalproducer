@@ -114,5 +114,12 @@
     set map = 0
     where id = #{id}
   </update>
-
+  <select id="histogram" resultType="com.jk.bean.Condition">
+select *, year(systime) as 年,
+month(systime) as systimemon,
+COUNT(*) as number
+from l_condition
+where year(systime)=2019
+group by year(systime), month(systime)
+    </select>
 </mapper>
