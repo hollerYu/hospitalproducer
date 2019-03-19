@@ -48,7 +48,6 @@ public class ContentServiceImpl implements ContentService {
             }
             getForeachData(nodesData,id);
             permission.setNodes(nodesData);
-
         }
     }
 

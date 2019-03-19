@@ -58,13 +58,11 @@
                     onNodeSelected:function(event,node){
                         //console.log(node)
                         $.addtabs({iframeHeight: 650});
-                       if(null !=  node.href && node.nodes==null ){
                             $.addtabs.add({
                                 id:node.id,
                                 title:node.text,
                                 url:node.href,
                             })
-                       }
                     }
                 })
             }
