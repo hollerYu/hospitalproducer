@@ -45,6 +45,6 @@ public class HotpointServiceImpl implements HotpointService {
     @Override
     public void saveEssay(HotPoint hotPoint) {
         hotPointMapper.saveEssay(hotPoint);
-
     }
+
 }
