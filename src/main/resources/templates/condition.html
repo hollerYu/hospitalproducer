@@ -172,8 +172,6 @@
         getConditionToHtml();
     })
 
-
-
     function addMongo() {
         $.ajax({
             url: "/condition/saveOrUpdate",
@@ -219,6 +217,8 @@
         address += e.addressComponent.streetNumber;
         layer.msg("当前定位地址为：" + address);
     });
+
+
     geolocationControl.addEventListener("locationError",function(e){
         // 定位失败事件
         alert(e.message);
@@ -333,22 +333,22 @@
 /*显示地图详细地址   开始*/
     // 百度地图API功能
 
-
     function dingweiMap(pointxs,pointys) { //接受数据
 
         var map2 = new BMap.Map("allMapBody");
-        map2.centerAndZoom(new BMap.Point(pointxs,pointys),11);
+        map2.centerAndZoom(new BMap.Point(pointxs,pointys),10);
         map2.enableScrollWheelZoom(true);
 
         if(pointxs !="" && pointys!=""){
             map2.clearOverlays();
             var new_point = new BMap.Point(pointxs,pointys);
 
-            var marker = new BMap.Marker(new_point);  // 创建标注
+            var marker = new BMap.Marker(new_point.point);  // 创建标注
             map2.addOverlay(marker);              // 将标注添加到地图中
-            map2.panTo(new_point);
+            map2.panTo(new_point.point);
         }
     }
+
 
 /*显示地图详细地址   结束*/
     function deleteItem(id, name) {

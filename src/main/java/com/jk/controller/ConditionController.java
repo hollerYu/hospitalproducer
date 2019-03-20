@@ -153,7 +153,7 @@ public class ConditionController {
 
         param.put("ccategories", c);
         param.put("ddata", d);
-        System.out.println(param);
+      //  System.out.println(param);
         return param;
     }
 
