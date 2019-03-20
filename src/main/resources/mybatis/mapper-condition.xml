@@ -114,6 +114,7 @@
     set map = 0
     where id = #{id}
   </update>
+
   <select id="histogram" resultType="com.jk.bean.Condition">
 select *, year(systime) as 年,
 month(systime) as systimemon,
@@ -122,4 +123,19 @@ from l_condition
 where year(systime)=2019
 group by year(systime), month(systime)
     </select>
+
+  <select id="getEchartsByCountAuthor" resultType="Lhouse">
+    select count(tu.yh_mch) countMch,tu.yh_mch userMch from l_collection lc,t_mall_user_account tu where lc.userid=tu.Id GROUP BY tu.yh_mch
+  </select>
+
+  <!--查询 评论  及回复-->
+  <select id="getEchartsComment" resultType="Comment">
+    select yc.id,yc.createTime from y_comment yc
+  </select>
+
+  <select id="getEchartsCommentReply" resultType="CommentReply">
+   select ycr.id,ycr.replyTime from y_commentreply ycr
+  </select>
+
+
 </mapper>

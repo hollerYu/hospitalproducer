@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <title>问卷调查后台控制管理</title>
     <script th:src="@{~/common/myJs.jsp}"></script>
+    <script src="/js/echarts.min.js"></script>
 </head>
 <body>
 
 <table id="tableId"></table>
+
+<div id="main" style="width: 800px;height:500px;"></div>
 
 <script>
     $(function(){
@@ -148,6 +151,81 @@
     function searcher(){
         $('#tableId').bootstrapTable('refresh');
     }
+//--------------------------------------erchart报表----------------
+
+
+    //-----------------------------------------
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    //发起get请求
+    $.get('/condition/getEchartsComment', function (data) {
+
+        myChart.setOption({   //{data: data.ccategories}
+
+            xAxis: [{data: data.categories},{data: data.ccategories}],
+            series: [{data: data.data},{data: data.ddata}],
+        })
+    });
+    // 指定图表的配置项和数据
+    myChart.setOption({
+        title: {
+            text: '评论与回复统计'
+        },
+        tooltip : {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
+                }
+            }
+        },
+        legend: {
+            data:['评论条数','回复条数']
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis : [
+            {
+                type : 'category',
+                boundaryGap : false,
+                data : []
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value'
+            }
+        ],
+        series : [
+            {
+                name:'评论条数',
+                type:'line',
+                stack: '总量',
+                //  areaStyle: {},
+                data:[]
+            },
+            {
+                name:'回复条数',
+                type:'line',
+                stack: '总量',
+                //   areaStyle: {},
+                data:[]
+            },
+
+        ]
+
+    })
+
 
 </script>
 </body>

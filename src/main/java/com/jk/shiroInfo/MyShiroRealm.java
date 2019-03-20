@@ -65,7 +65,6 @@ public class MyShiroRealm extends AuthorizingRealm {
         //当前登录的用户名
         String username = token.getPrincipal().toString();
         User userData = contentService.queryByUserName(username);
-        System.err.println("userData====>"+userData);
         if(userData == null){
             return null;
         }

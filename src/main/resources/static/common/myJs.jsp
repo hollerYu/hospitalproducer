@@ -31,5 +31,3 @@ document.write('<script src="/js/layer/layer.js"></script>');
 document.write('<link rel="stylesheet" href="/js/layer/theme/default/layer.css">');
 
 
-
-

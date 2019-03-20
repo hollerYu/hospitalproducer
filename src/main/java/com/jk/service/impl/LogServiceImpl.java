@@ -4,6 +4,7 @@ import com.jk.bean.Log;
 import com.jk.bean.User;
 import com.jk.service.LogService;
 import com.jk.untils.ReturnPage;
+import org.apache.poi.ss.formula.functions.Count;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -46,5 +47,16 @@ public class LogServiceImpl implements LogService {
         ReturnPage sendPage = new ReturnPage(count, logList);// java 的装箱和拆箱
         return sendPage;
     }
+
+    @Override
+    public List<Log> getEachersTwo() {
+
+        Query query = new Query();
+
+        List<Log> logList = mongoTemplate.find(query, Log.class);
+
+        return logList;
+    }
+
 
 }

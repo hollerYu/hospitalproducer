@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script th:src="@{~/common/myJs.jsp}"></script>
+    <script src="/js/echarts.min.js"></script>
 </head>
 <body>
 <div id="toolbar">
@@ -137,6 +138,9 @@
 </div>
 
 <table id="myTable"></table>
+
+<div id="main" style="width: 800px;height:400px;"></div>
+
 </body>
 <script>
     //data框
@@ -437,7 +441,79 @@
                 }
             });
         }
-
     }
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    //发起get请求
+    $.get('/condition/getEchartsByCountAuthor', function (data) {
+        myChart.setOption({
+            xAxis: {data: data.categories},
+            series: [{data: data.data},{data: data.data}],
+
+        })
+    });
+    // 指定图表的配置项和数据
+    myChart.setOption({
+        title: {
+            text: '作者发表文章',
+            subtext:""
+        },
+        tooltip: {
+            formater:"作者",
+            axisPointer:{
+                type:'cross',
+            }
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                mark : {show: true},
+                dataView: {show: true,readOnly: false},
+                magicType: {type: ['line', 'bar']},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+        legend: {
+            data: ['作者总发表量统计']
+        },
+        xAxis: {
+            data: [{
+                splitNumber:5,
+                minInterval:1,
+                nameTextStyle:{
+                    color:'#cc8',
+                }
+            }],
+        },
+        yAxis: {},
+        series: [{
+            name: '作者',
+            type: 'bar',
+            data: [],
+            areaStyle: {
+                normal: {
+                    color: '#8cd5c2' //改变区域颜色
+                }
+            },
+            itemStyle : {
+                normal : {
+                    color:'#8cd5c2', //改变折线点的颜色
+                    lineStyle:{
+                        color:'#1c52c8' //改变折线颜色
+                    }
+                }
+            },
+        },{
+            name: '作者',
+            type: 'line',
+            data: []
+        }]
+    });
+
 </script>
 </html>

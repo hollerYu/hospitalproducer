@@ -1,6 +1,9 @@
 package com.jk.service.impl;
 
+import com.jk.bean.Comment;
+import com.jk.bean.CommentReply;
 import com.jk.bean.Condition;
+import com.jk.bean.Lhouse;
 import com.jk.mapper.ConditionMapper;
 import com.jk.service.ConditionService;
 import com.jk.untils.PageUtil;
@@ -15,10 +18,8 @@ import java.util.List;
 @Service
 public class ConditionServiceImpl implements ConditionService {
 
-
     @Resource
     private ConditionMapper conditionMapper;
-
 
     @Override
     public ResultPage getCondition(Integer page, Integer rows) {
@@ -74,5 +75,20 @@ public class ConditionServiceImpl implements ConditionService {
 
     }
 
+
+    @Override
+    public List<Lhouse> getEchartsByCountAuthor() {
+        return conditionMapper.getEchartsByCountAuthor();
+    }
+
+    @Override
+    public List<Comment> getEchartsComment() {
+        return conditionMapper.getEchartsComment();
+    }
+
+    @Override
+    public List<CommentReply> getEchartsCommentReply() {
+        return conditionMapper.getEchartsCommentReply();
+    }
 
 }

@@ -1,6 +1,9 @@
 package com.jk.service;
 
+import com.jk.bean.Comment;
+import com.jk.bean.CommentReply;
 import com.jk.bean.Condition;
+import com.jk.bean.Lhouse;
 import com.jk.untils.ResultPage;
 
 import java.util.List;
@@ -19,6 +22,12 @@ public interface ConditionService {
     void editmap(Integer id);
 
     void editConcelmap(Integer id);
+
+    List<Lhouse> getEchartsByCountAuthor();
+
+    List<Comment> getEchartsComment();
+
+    List<CommentReply> getEchartsCommentReply();
 
     List<Condition> histogram();
 

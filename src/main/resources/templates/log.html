@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script th:src="@{~/common/myJs.jsp}"></script>
+    <script src="/js/echarts.min.js"></script>
+
 </head>
 <body>
 
@@ -19,8 +21,10 @@
     </form>
 </div>
 
-
 <table id="tableId"></table>
+
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="main" style="width: 1200px;height:600px;"></div>
 </body>
 
 <script type="text/javascript">
@@ -99,5 +103,7 @@
     function searcher(){
         $('#tableId').bootstrapTable('refresh');
     }
+
+    //-----------------------------------ercharts 报表-----------------------------------------
 </script>
 </html>
