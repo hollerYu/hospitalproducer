@@ -30,8 +30,8 @@
     where id = #{id}
   </delete>
 
-    <insert id="saveEssay" parameterType="com.jk.bean.HotPoint">
-        insert into y_hotspot (id,titles,photo,seeCount,times,content) values
-        (#{id},#{titles},#{photo},#{seeCount},#{times},#{content},)
-    </insert>
+    <insert id="saveEssay" parameterType="com.jk.bean.HotPoint" >
+    insert into y_hotspot (id, titles, photo,seeCount,times,content)
+    values (#{id}, #{titles}, #{photo},#{seeCount},#{times},#{content})
+  </insert>
 </mapper>
