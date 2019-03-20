@@ -34,4 +34,13 @@
     insert into y_hotspot (id, titles, photo,seeCount,times,content)
     values (#{id}, #{titles}, #{photo},#{seeCount},#{times},#{content})
   </insert>
+
+    <select id="histogram" resultType="com.jk.bean.HotPoint">
+        select *, year(times) as 年,
+        month(times) as systimemon,
+        COUNT(*) as number
+        from y_hotspot
+        where year(times)=2019
+        group by year(times), month(times)
+    </select>
 </mapper>

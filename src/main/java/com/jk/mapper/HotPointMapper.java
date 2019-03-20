@@ -19,4 +19,6 @@ public interface HotPointMapper {
 
     void saveEssay(HotPoint hotPoint);
 
+    List<HotPoint> histogram();
+
 }

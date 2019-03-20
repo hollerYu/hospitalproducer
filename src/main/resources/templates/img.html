@@ -14,6 +14,12 @@
             <input type="text" class="form-control" id="title" placeholder="请输入名称">
         </div>
         <br><br>
+        <div class="form-group">
+            <label for="startTime">时间:</label>
+            <input type="text" class="form-control date"  id="startTime"> -
+            <input type="text" class="form-control date"  id="endTime">
+        </div>
+        <br><br>
         <button onclick="searcher()" type="button" class="btn btn-info glyohicon glyohicon-search">搜索</button>
     </form>
 
@@ -35,6 +41,10 @@
                             <div class="col-xs-2">简介</div>
                             <div class="col-xs-10">
                                 <textarea rows="" cols="" class="form-control" name="jianjie"></textarea>
+                            </div>
+                            <div class="col-xs-2">时间</div>
+                            <div class="col-xs-10">
+                                <input type="text" class="form-control date" name="shijian">
                             </div>
                         </div>
                         <div class="row">
@@ -59,13 +69,69 @@
         </div>
     </div>
 </div>
+<div id="main" style="width: 600px;height:400px;"></div>
 </body>
+
+<script>
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById("main"));
+    //发起get请求
+    $.get('/img/queryByYue', function (data) {
+
+        myChart.setOption({
+            xAxis: {data: data.shijian},
+            series: {data: data.number}
+        })
+    });
+    // 指定图表的配置项和数据
+    myChart.setOption({
+        title: {
+            text: '2019年每月发布数量'
+        },
+        tooltip: {},
+        legend: {
+            data: ['每月']
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                dataView: {readOnly: false},
+                magicType: {type: ['line', 'bar']},
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            data: []
+        },
+        yAxis: {},
+        series: [{
+            name: '数量',
+            type: 'bar',
+            data: []
+        }]
+    });
+</script>
+
+
 <script>
 
     $(function () {
         getMessageToHtml();
         preFile();
     })
+
+    //data框
+    $('.date').datetimepicker({
+        language: 'zh-CN',//显示中文
+        format: 'yyyy-mm-dd hh:ii:ss',//显示格式
+        minView: "hour",//设置只显示到月份
+        autoclose: true,//选中自动关闭
+        todayBtn: true//显示今日按钮
+    });
 
     function getMessageToHtml() {
         $('#myTable').bootstrapTable({
@@ -84,10 +150,14 @@
             pageList:[1,3,5, 10, 50],     //分页组件
             queryParams: function (params) {
                 var title = $('#title').val();
+                var startTime = $('#startTime').val();
+                var endTime = $('#endTime').val();
                 return {
                     page: this.pageNumber,
                     rows: this.pageSize,
                     title:title,
+                    startTime:startTime,
+                    endTime:endTime
                 };
             },//传递参数（*）
             strictSearch: true,
@@ -109,6 +179,7 @@
                         return "<img alt='图片' src='" + value + "' width='40px'>";
                     }
                 },
+                {field: 'shijian', title: '发布时间'},
                 {
                     field: '222', title: '操作', formatter: function (value, row, index) {
                         return '<button onclick="deleteItem(' + row.id + ',\'' + row.name + '\')" class="btn btn-error" >删除</button>';

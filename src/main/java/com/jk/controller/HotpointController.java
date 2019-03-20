@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -66,5 +70,26 @@ public class HotpointController {
             }
         }
         return count;
+    }
+
+    @RequestMapping("queryByYue")
+    @ResponseBody
+    public Map<String, Object> histogram(){
+        HashMap<String, Object> params = new HashMap<>();
+        ArrayList a = new ArrayList<>();
+        ArrayList<Integer> b = new ArrayList<>();
+        List<HotPoint> copySku = hotpointService.histogram();
+        for (HotPoint sku : copySku) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");//设置日期格式
+            String format = sdf.format(sku.getTimes());
+            a.add(format);
+            b.add(Integer.valueOf(sku.getNumber()));
+        }
+        System.out.println(a);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        params.put("times",a);
+        params.put("number",b);
+        System.out.println("=================>"+params);
+        return params;
     }
 }

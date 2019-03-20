@@ -47,4 +47,9 @@ public class HotpointServiceImpl implements HotpointService {
         hotPointMapper.saveEssay(hotPoint);
     }
 
+    @Override
+    public List<HotPoint> histogram() {
+        return hotPointMapper.histogram();
+    }
+
 }

@@ -5,7 +5,7 @@
 <mapper namespace="com.jk.mapper.ImgMapper">
 
     <select id="getimglistAll" resultType="com.jk.bean.Img">
-       select id,title,path_url,jianjie
+       select id,title,path_url,jianjie,shijian
        from t_img
         <include refid="paging"></include>
        limit #{start},#{end}
@@ -16,6 +16,12 @@
             <if test="Img.title != null and Img.title != '' ">
                 and title like '%${Img.title}%'
             </if>
+            <if test="Img.startTime != null  ">
+                and shijian &gt;= #{Img.startTime}
+            </if>
+            <if test="Img.endTime != null ">
+                and shijian &lt;= #{Img.endTime}
+            </if>
         </where>
     </sql>
 
@@ -25,7 +31,16 @@
     </delete>
 
     <insert id="saveEssay" parameterType="com.jk.bean.Img" >
-    insert into t_img (id, title, path_url,jianjie)
-    values (#{id}, #{title}, #{path_url},#{jianjie})
+    insert into t_img (id, title, path_url,jianjie,shijian)
+    values (#{id}, #{title}, #{path_url},#{jianjie},#{shijian})
   </insert>
+
+    <select id="histogram" resultType="com.jk.bean.Img">
+        select *, year(shijian) as 年,
+        month(shijian) as systimemon,
+        COUNT(*) as number
+        from t_img
+        where year(shijian)=2019
+        group by year(shijian), month(shijian)
+    </select>
 </mapper>

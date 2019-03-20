@@ -16,4 +16,7 @@ public interface ImgMapper {
     void deleteOne(Integer id);
 
     void saveEssay(Img img);
+
+    List<Img> histogram();
+
 }

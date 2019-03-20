@@ -43,4 +43,10 @@ public class ImgServiceImpl implements ImgService {
     public void saveEssay(Img img) {
         imgMapper.saveEssay(img);
     }
+
+    @Override
+    public List<Img> histogram() {
+
+        return imgMapper.histogram();
+    }
 }
