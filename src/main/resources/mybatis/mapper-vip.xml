@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.mapper.VipMapper" >
+  <resultMap id="BaseResultMap" type="com.jk.bean.Vip" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="start_time" property="startTime" jdbcType="DATE" />
+    <result column="end_time" property="endTime" jdbcType="DATE" />
+    <result column="send_email" property="sendEmail" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, start_time, end_time, send_email, user_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from l_condition
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getVipList" resultMap="BaseResultMap" parameterType="map" >
+    select
+    cv.id id ,cv.start_time startTime,cv.end_time endTime,tu.yh_mch userName
+    from c_vip cv, t_mall_user_account tu where cv.user_id = tu.id
+    limit #{start},#{end}
+  </select>
+</mapper>

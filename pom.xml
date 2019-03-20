@@ -31,6 +31,12 @@
             <artifactId>fastjson</artifactId>
             <version>1.1.32</version>
         </dependency>
+        <dependency>
+            <groupId>net.sf.json-lib</groupId>
+            <artifactId>json-lib</artifactId>
+            <version>2.4</version>
+            <classifier>jdk18</classifier>
+        </dependency>
         <!--aliyunOSS-->
         <dependency>
         <groupId>com.aliyun.oss</groupId>
@@ -179,6 +185,11 @@
             <groupId>net.sf.json-lib</groupId>
             <artifactId>json-lib</artifactId>
             <version>2.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.json-lib</groupId>
+            <artifactId>json-lib</artifactId>
+            <version>2.4</version>
         </dependency>
 
 

@@ -61,6 +61,8 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/img/**", "anon");
         filterChainDefinitionMap.put("/js/**", "anon");
         filterChainDefinitionMap.put("/common/**", "anon");
+        filterChainDefinitionMap.put("/vip/test", "anon");
+        filterChainDefinitionMap.put("/vip/getVipList", "anon");
         filterChainDefinitionMap.put("/common/myJs.jsp", "anon");
         filterChainDefinitionMap.put("/contentYjm/toLogin", "anon");
         filterChainDefinitionMap.put("/contentYjm/insertForm", "anon");   //登录的验证方法
@@ -72,7 +74,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/**", "authc");
         // 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
         //shiro拦截请求后如果发现没有登录 会自动跳转到登录接口
-        shiroFilterFactoryBean.setLoginUrl("/contentYjm/toPage?page=login");//设置登录的界面
+        shiroFilterFactoryBean.setLoginUrl("/contentYjm/toLogin");//设置登录的界面
         // 当检测到没有登录时会自动跳转到登录界面
         // 登录成功后要跳转的链接
         shiroFilterFactoryBean.setSuccessUrl("/contentYjm/toPage?page=index");
