@@ -25,4 +25,6 @@ public class Leave {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date endTime;
+
+    private Integer number;
 }

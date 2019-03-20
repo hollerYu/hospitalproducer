@@ -38,4 +38,13 @@
     insert into l_leave (id, leavetitle, expertname,systime)
     values (#{id}, #{leavetitle}, #{expertname},#{systime})
   </insert>
+
+    <select id="histogram" resultType="com.jk.bean.Leave">
+select *, year(systime) as 年,
+month(systime) as systimemon,
+COUNT(*) as number
+from l_leave
+where year(systime)=2019
+group by year(systime), month(systime)
+    </select>
 </mapper>

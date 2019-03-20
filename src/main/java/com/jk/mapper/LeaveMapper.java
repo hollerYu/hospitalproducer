@@ -17,4 +17,5 @@ public interface LeaveMapper {
 
     void saveEssay(Leave leave);
 
+    List<Leave> histogram();
 }

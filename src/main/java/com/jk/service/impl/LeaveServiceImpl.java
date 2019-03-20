@@ -1,6 +1,5 @@
 package com.jk.service.impl;
 
-import com.jk.bean.Img;
 import com.jk.bean.Leave;
 import com.jk.mapper.LeaveMapper;
 import com.jk.service.LeaveService;
@@ -42,5 +41,10 @@ public class LeaveServiceImpl implements LeaveService {
     @Override
     public void saveEssay(Leave leave) {
         leaveMapper.saveEssay(leave);
+    }
+
+    @Override
+    public List<Leave> histogram() {
+        return leaveMapper.histogram();
     }
 }

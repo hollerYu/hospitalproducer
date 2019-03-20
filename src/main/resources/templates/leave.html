@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script th:src="@{~/common/myJs.jsp}"></script>
+    <script src="/js/echarts/echarts.js"></script>
 </head>
 <body>
 <div id="toolbar">
@@ -64,7 +65,52 @@
         </div>
     </div>
 </div>
+<div id="main" style="width: 600px;height:400px;"></div>
 </body>
+
+<script>
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById("main"));
+    //发起get请求
+    $.get('/leave/queryByYue', function (data) {
+
+        myChart.setOption({
+            xAxis: {data: data.systime},
+            series: {data: data.number}
+        })
+    });
+    // 指定图表的配置项和数据
+    myChart.setOption({
+        title: {
+            text: '2019年每月发布数量'
+        },
+        tooltip: {},
+        legend: {
+            data: ['每月']
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                dataView: {readOnly: false},
+                magicType: {type: ['line', 'bar']},
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            data: []
+        },
+        yAxis: {},
+        series: [{
+            name: '数量',
+            type: 'bar',
+            data: []
+        }]
+    });
+</script>
 <script>
 
     $(function () {
