@@ -72,9 +72,10 @@ public class SpecialistTwoController {
 
     //poi导出
     @RequestMapping("exportSpecialist")
-    public void importpoi(HttpServletResponse response) {
+    public void importpoi(HttpServletResponse response,String ids) {
         Query query = new Query();
-        List<SpecialistTwo> list = mongoTemplate.find(query, SpecialistTwo.class);
+        String[] idsArr = ids.split(",");
+        List<SpecialistTwo> list = mongoTemplate.find(query.addCriteria(Criteria.where("id").in(idsArr)), SpecialistTwo.class);
         //使用poi将导出
         String title = "专家列表";
         String[] rowName = {"id","name", "address", "dataimg", "fenlei","portion"};
